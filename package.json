@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon dist/app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc -p ."
+    "build": "tsc"
   },
   "author": "Kazi Mashry",
   "license": "ISC",
