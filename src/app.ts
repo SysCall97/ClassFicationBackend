@@ -13,6 +13,6 @@ app.use(cors());
 app.get('/', (req: Request, res: Response) => res.send('Everything is working fine'))
 app.use('/user', userRoute);
 
-const port = process.env.port || 5000
+const port = process.env.PORT || 5000
 
 app.listen(port, () => console.log("Server is running"));
