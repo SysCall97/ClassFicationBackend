@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const uri = process.env.uri;
+const uri = process.env.URI;
 
 if(!uri) {
     console.log("Mongo URI not found");
