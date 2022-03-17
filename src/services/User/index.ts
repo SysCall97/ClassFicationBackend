@@ -1,27 +1,27 @@
 import { ISignup, ISignin } from './../../interfaces';
 import User from '../../models/User'
 
-class userService {
-    public static signUp = (data: ISignup) => {
+class UserService {
+    public static signUp = (data: ISignup): Promise<any> => {
         return User.create(data);
     }
     
-    public static signIn = (data: ISignin) => {
-        return User.find({ email: data.email })
+    public static signIn = (data: ISignin): Promise<any> => {
+        return User.find({ email: data.email, password: data.password })
     }
     
-    // public static findById = (data: any) => {
+    // public static findById = (data: any): Promise<any> => {
     //     return User.findById(data.id);
     // }
     
-    // public static logOut = (data: any) => {
+    // public static logOut = (data: any): Promise<any> => {
     //     return Dump.create(data);
     // }
     
-    // public static isDumped = (token: any) => {
+    // public static isDumped = (token: any): Promise<any> => {
     //     return Dump.find({ token: token });
     // }
 }
 
 
-export default userService;
+export default UserService;
