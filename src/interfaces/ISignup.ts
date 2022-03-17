@@ -3,3 +3,7 @@ export interface ISignup {
     email: string,
     password: string
 };
+
+export interface IAuth {
+    _id: string
+}
