@@ -3,7 +3,6 @@ import crypto from 'crypto'
 import userService from '../../services/User';
 import { IAuth } from '../../interfaces';
 import Token from '../../services/Token';
-// const userService = require("../services/userService");
 
 class SignIn {
     public static async perform(req: Request, res: Response): Promise<any> {

@@ -1,6 +1,5 @@
 import { ISignup, ISignin } from './../../interfaces';
 import User from '../../models/User'
-// const Dump = require('../models/dumpedTokenModel');
 
 class userService {
     public static signUp = (data: ISignup) => {

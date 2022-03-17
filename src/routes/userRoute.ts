@@ -3,7 +3,6 @@ import {Router} from 'express';
 import { SignIn, SignUp } from '../controllers/User';
 
 const userRoute: Router = Router();
-// const userController = require('../controllers/userController');
 
 // Routes
 userRoute.post('/signup', SignUp.perform);
