@@ -7,7 +7,6 @@ class UserService {
     }
     
     public static signIn = (data: ISignin): Promise<any> => {
-        console.log(data);
         return User.find({ email: data.email, password: data.password })
     }
     
