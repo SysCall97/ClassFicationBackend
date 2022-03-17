@@ -1,4 +1,4 @@
-import { ISignup, IAuth } from './ISignup';
+import { ISignup, IAuth, ISignin } from './IAuth';
 export {
-    ISignup, IAuth
+    ISignup, IAuth, ISignin
 }

@@ -1,4 +1,4 @@
-import { IAuth } from './../../interfaces/ISignup';
+import { IAuth } from '../../interfaces/IAuth';
 import * as jwt from 'jsonwebtoken';
 
 class Token {
