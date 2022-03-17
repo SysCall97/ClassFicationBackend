@@ -1,4 +1,4 @@
-import { ISignup } from './../../interfaces';
+import { ISignup, ISignin } from './../../interfaces';
 import User from '../../models/User'
 // const Dump = require('../models/dumpedTokenModel');
 
@@ -7,9 +7,9 @@ class userService {
         return User.create(data);
     }
     
-    // public static logIn = (data: any) => {
-    //     return User.find({ email: data.email })
-    // }
+    public static signIn = (data: ISignin) => {
+        return User.find({ email: data.email })
+    }
     
     // public static findById = (data: any) => {
     //     return User.findById(data.id);
