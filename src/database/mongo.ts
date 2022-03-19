@@ -27,7 +27,8 @@ const db = {
     disconnect() {
         console.log("this is disconnect");
         return new Promise<void>((resolve) => {
-            mongoose.disconnect();
+            // mongoose.disconnect();
+            mongoose.connection.close();
             resolve();
         }); 
     }
