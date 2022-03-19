@@ -1,9 +1,10 @@
+import mongoose from "mongoose";
 import { validateEmail } from "../../helpers";
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
