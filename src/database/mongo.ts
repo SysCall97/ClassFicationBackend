@@ -1,21 +1,32 @@
 import mongoose from 'mongoose';
 
-const uri = process.env.URI;
+const db = {
+    connect() {
+        const uri = process.env.URI;
+        
+        if(!uri) {
+            console.log("Mongo URI not found");
+            throw new Error("Mongo URI not found");
+        }
+        mongoose.connect(
+            uri,
+            (err) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    console.log("Successfully connected");
+                }
+            }
+        );
+    
+    },
 
-if(!uri) {
-    console.log("Mongo URI not found");
-    throw new Error("Mongo URI not found");
+    disconnect() {
+        console.log("this is disconnect");
+        mongoose.disconnect();
+    }
 }
 
-mongoose.connect(
-    uri,
-    (err) => {
-        if(err) {
-            console.log(err);
-        } else {
-            console.log("Successfully connected");
-        }
-    }
-);
 
-module.exports = mongoose;
+
+export default db;

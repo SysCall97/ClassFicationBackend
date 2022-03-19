@@ -4,11 +4,13 @@ import crypto from 'crypto'
 import userService from '../../services/User';
 import { IAuth } from '../../interfaces';
 import Token from '../../services/Token';
+import db from '../../database';
 
 class SignIn {
     public static perform(req: Request, res: Response): Promise<any> {
         return new Promise(async () => {
             try {
+                db.connect()
                 const data: IAuth[] = await userService.signIn({
                     email: req.body.email,
                     password: crypto.createHash('md5').update(req.body.password).digest('hex')
@@ -23,6 +25,8 @@ class SignIn {
                 return res.status(200).json({ token });
             } catch (err: any) {
                 return res.status(500).json({ message: err.message || SIGNIN_ERROR });
+            } finally {
+                db.disconnect();
             }
 
         });
