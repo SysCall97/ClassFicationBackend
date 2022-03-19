@@ -1,3 +1,5 @@
+import { validateEmail } from "../../helpers";
+
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
@@ -10,6 +12,7 @@ const userSchema = mongoose.Schema({
     email: {
         type: String,
         trim: true,
+        validate: [validateEmail, 'Please fill a valid email address'],
         unique: true,
         required: true
     },
