@@ -1,10 +1,11 @@
 import express, {Application, Request, Response} from 'express';
 import cors from 'cors';
 import userRoute from './routes/userRoute';
+// import db from './database/mongo'
 
 require('dotenv').config();
 
-const db = require('./database/mongo')
+// db.initializeDb();
 
 const app: Application = express();
 app.use(express.json());
