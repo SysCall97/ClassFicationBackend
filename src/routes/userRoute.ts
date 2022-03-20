@@ -1,6 +1,6 @@
 // dependencies
 import {Router} from 'express';
-import { SignIn, SignOut, SignUp } from '../controllers/User';
+import { SignIn, SignOut, SignUp } from '../controllers/Auth';
 
 const userRoute: Router = Router();
 
