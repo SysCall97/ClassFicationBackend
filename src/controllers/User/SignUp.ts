@@ -1,4 +1,4 @@
-import { SIGNUP_ERROR } from './../../messages/index';
+import { SIGNUP_ERROR, SIGN_UP_SUCCESSFULL } from './../../messages/index';
 import {Request, Response} from 'express'
 import crypto from 'crypto'
 import userService from '../../services/User';
@@ -16,7 +16,10 @@ class SignUp {
                 });
     
                 const token: string = Token.getToken(data);
-                return res.status(200).json({ token });
+                return res.status(200).json({ 
+                    message: SIGN_UP_SUCCESSFULL,
+                    token
+                 });
             } catch (err: any) {
                 return res.status(500).json({ message: err.message || SIGNUP_ERROR });
             }

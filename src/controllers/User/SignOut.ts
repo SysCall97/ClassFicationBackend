@@ -1,26 +1,18 @@
+import { SIGN_OUT_SUCCESSFULL, SIGN_OUT_FAILURE } from './../../messages/index';
 import {Request, Response} from 'express'
-import crypto from 'crypto'
-import * as jwt from 'jsonwebtoken';
-// const userService = require("../services/userService");
+import UserService from '../../services/User';
 
 class SignOut {
     public static perform(req: Request, res: Response): any {
-        // try {
-        //     const data = await userService.signIn({
-        //         name: req.body.name,
-        //         email: req.body.email,
-        //         password: crypto.createHash('md5').update(req.body.password).digest('hex')
-        //     });
-        //     const info = {
-        //         uid: data._id,
-        //         signedIn: new Date().toLocaleString()
-        //     }
-        //     const token = await jwt.sign(info, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE_MINUTE * 60 });
-    
-        //     return res.status(200).json({ token });
-        // } catch (err) {
-        //     return res.status(500).json({ message: err.message });
-        // }
+        return new Promise(async () => {
+            try {
+                const token: string = req.headers.authorization?.split(' ')[1]!;
+                await UserService.signOut({token});
+                return res.status(200).json({ message: SIGN_OUT_SUCCESSFULL });
+            } catch (err: any) {
+                return res.status(500).json({ message: err?.message || SIGN_OUT_FAILURE });
+            }
+        });
     }
 }
 
