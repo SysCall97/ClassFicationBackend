@@ -1,12 +1,12 @@
 // dependencies
 import {Router} from 'express';
-import { SignIn, SignUp } from '../controllers/User';
+import { SignIn, SignOut, SignUp } from '../controllers/User';
 
 const userRoute: Router = Router();
 
 // Routes
 userRoute.post('/signup', SignUp.perform);
 userRoute.get('/signin', SignIn.perform);
-// userRoute.post('/logout', userController.signOut);
+userRoute.post('/signout', SignOut.perform);
 
 export default userRoute;

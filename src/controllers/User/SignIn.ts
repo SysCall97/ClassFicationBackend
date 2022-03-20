@@ -1,4 +1,4 @@
-import { INVALID_EMAIL_PASSWORD, SIGNIN_ERROR } from './../../messages/index';
+import { INVALID_EMAIL_PASSWORD, SIGNIN_ERROR, SIGN_IN_SUCCESSFULL } from './../../messages/index';
 import {Request, Response} from 'express'
 import crypto from 'crypto'
 import userService from '../../services/User';
@@ -20,7 +20,10 @@ class SignIn {
     
                 const token: string = Token.getToken(data[0]);
                 
-                return res.status(200).json({ token });
+                return res.status(200).json({ 
+                    message: SIGN_IN_SUCCESSFULL, 
+                    token 
+                });
             } catch (err: any) {
                 return res.status(500).json({ message: err.message || SIGNIN_ERROR });
             }

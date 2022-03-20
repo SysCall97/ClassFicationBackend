@@ -13,3 +13,6 @@ export interface ISignin {
     password: string
 }
 
+export interface ISignout {
+    token: string
+}

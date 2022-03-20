@@ -1,5 +1,6 @@
 import { IAuth } from '../../interfaces/IAuth';
 import * as jwt from 'jsonwebtoken';
+import Dump from '../../models/Token'
 
 class Token {
     public static getToken(data: IAuth): string {
@@ -12,6 +13,12 @@ class Token {
         const token: string = jwt.sign(info, privateKey, { expiresIn: Number(expireMinute) * 60 });
 
         return token;
+    }
+
+    
+    
+    public static isDumped (token: any): Promise<any> {
+        return new Promise(() => Dump.find({ token: token }));
     }
 }
 
