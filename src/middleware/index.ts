@@ -1,4 +1,5 @@
-import { signUpMiddleware } from './signUp'
+import { signUpMiddleware } from './signUp';
+import { signInMiddleware } from './signIn'
 export {
-    signUpMiddleware
+    signUpMiddleware, signInMiddleware
 }
