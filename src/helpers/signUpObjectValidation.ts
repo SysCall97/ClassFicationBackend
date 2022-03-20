@@ -1,5 +1,5 @@
+import { validatePassword, validateEmail, validateName } from './index';
 import { INVALID_EMAIL, INVALID_PASSWORD, INVALID_NAME } from './../messages/index';
-import { validateEmail } from './emailValidation';
 import { ISignup } from './../interfaces/IAuth';
 
 export function signUpObjectValidation(obj: ISignup) {
@@ -11,11 +11,11 @@ export function signUpObjectValidation(obj: ISignup) {
         ret.status = false,
         ret.message += INVALID_EMAIL + '_'
     }
-    if(!obj.name.length) {
+    if(!validateName(obj.name)) {
         ret.status = false,
         ret.message += INVALID_NAME + '_'
     }
-    if(!obj.password.length) {
+    if(!validatePassword(obj.password)) {
         ret.status = false,
         ret.message += INVALID_PASSWORD + '_';
     }
