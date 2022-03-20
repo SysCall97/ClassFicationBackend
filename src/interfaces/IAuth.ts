@@ -16,3 +16,8 @@ export interface ISignin {
 export interface ISignout {
     token: string
 }
+
+export interface IAuthValidation {
+    status: Boolean,
+    message: string
+}
