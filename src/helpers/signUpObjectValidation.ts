@@ -1,8 +1,8 @@
 import { validatePassword, validateEmail, validateName } from './index';
 import { INVALID_EMAIL, INVALID_PASSWORD, INVALID_NAME } from './../messages/index';
-import { ISignup } from './../interfaces/IAuth';
+import { ISignup, IAuthValidation } from './../interfaces/IAuth';
 
-export function signUpObjectValidation(obj: ISignup) {
+export function signUpObjectValidation(obj: ISignup): IAuthValidation {
     const ret = {
         status: true,
         message: '_'
