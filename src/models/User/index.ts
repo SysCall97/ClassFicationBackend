@@ -1,3 +1,4 @@
+import { INVALID_EMAIL } from './../../messages/index';
 import mongoose from "mongoose";
 import { validateEmail } from "../../helpers";
 
@@ -13,7 +14,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         trim: true,
-        validate: [validateEmail, 'Please fill a valid email address'],
+        validate: [validateEmail, INVALID_EMAIL],
         unique: true,
         required: true
     },
