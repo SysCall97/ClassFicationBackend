@@ -12,12 +12,16 @@ class SignUp {
                 const data: IAuth = await userService.signUp({
                     name: req.body.name,
                     email: req.body.email,
+                    role: req.body.role,
                     password: crypto.createHash('md5').update(req.body.password).digest('hex')
                 });
     
                 const token: string = Token.getToken(data);
                 return res.status(200).json({ 
                     message: SIGN_UP_SUCCESSFULL,
+                    name: data.name,
+                    email: data.email,
+                    role: data.role,
                     token
                  });
             } catch (err: any) {

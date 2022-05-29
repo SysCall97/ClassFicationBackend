@@ -22,6 +22,9 @@ class SignIn {
                 
                 return res.status(200).json({ 
                     message: SIGN_IN_SUCCESSFULL, 
+                    name: data[0].name,
+                    email: data[0].email,
+                    role: data[0].role,
                     token 
                 });
             } catch (err: any) {
