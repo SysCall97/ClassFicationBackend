@@ -7,6 +7,7 @@ export function signUpMiddleware(req: Request, res: Response, next: NextFunction
     const obj: ISignup = {
         name: req.body.name || '',
         email: req.body.email || '',
+        role: req.body.role || -1,
         password: req.body.password || ''
     };
 
