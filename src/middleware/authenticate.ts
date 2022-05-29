@@ -15,7 +15,7 @@ export async function authenticateMiddleWare(req: Request, res: Response, next: 
             res.status(StatusCodes.UNAUTHORIZED).json({ message: UNAUTHORIZED_USER });
         } else {
             req.body.email = decodedToken.email;
-            req.body.name = decodedToken.name;
+            req.body.uid = decodedToken.uid;
             req.body.role = decodedToken.role;
             next();
         }

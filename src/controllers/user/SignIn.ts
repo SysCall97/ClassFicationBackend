@@ -1,7 +1,7 @@
 import { INVALID_EMAIL_PASSWORD, SIGNIN_ERROR, SIGN_IN_SUCCESSFULL } from '../../messages/index';
 import {Request, Response} from 'express'
 import crypto from 'crypto'
-import userService from '../../services/User';
+import UserService from '../../services/User';
 import { IAuth } from '../../interfaces';
 import Token from '../../services/Token';
 import { StatusCodes } from 'http-status-codes';
@@ -9,7 +9,7 @@ import { StatusCodes } from 'http-status-codes';
 class SignIn {
     public static async perform(req: Request, res: Response): Promise<void> {
         try {
-            const data: IAuth[] = await userService.signIn({
+            const data: IAuth[] = await UserService.signIn({
                 email: req.body.email,
                 password: crypto.createHash('md5').update(req.body.password).digest('hex')
             });
@@ -23,6 +23,7 @@ class SignIn {
             res.status(StatusCodes.OK).json({ 
                 message: SIGN_IN_SUCCESSFULL, 
                 name: data[0].name,
+                uid: data[0]._id,
                 email: data[0].email,
                 role: data[0].role,
                 token 

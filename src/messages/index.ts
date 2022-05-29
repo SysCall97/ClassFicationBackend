@@ -12,3 +12,5 @@ export const INVALID_NAME: string = "Please fill a valid name";
 export const INVALID_ROLE: string = "Please select your role in the application";
 export const DUPLICATE_EMAIL_ERROR: string = "This email is already used";
 export const UNAUTHORIZED_USER: string = "Unauthorized user";
+export const CLASS_CREATE_FAILED: string = "Failed to create class. Please try later";
+export const CLASS_NAME_REQUIRED: string = "Class name required.";
