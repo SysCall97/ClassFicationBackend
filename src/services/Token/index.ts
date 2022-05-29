@@ -4,7 +4,6 @@ import Dump from '../../models/Token'
 
 class Token {
     public static getToken(data: IAuth): string {
-        console.log(data);
         const privateKey: string = process.env.JWT_SECRET!;
         const expireMinute: string = process.env.JWT_EXPIRE_MINUTE!;
         const info = {

@@ -1,6 +1,6 @@
 // dependencies
 import {Router} from 'express';
-import { SignIn, SignOut, SignUp } from '../controllers/auth';
+import { SignIn, SignOut, SignUp } from '../controllers/user';
 import { signInMiddleware, signUpMiddleware } from '../middleware';
 
 const userRoute: Router = Router();
