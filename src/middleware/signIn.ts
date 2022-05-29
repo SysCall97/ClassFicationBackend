@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes';
 import { SIGN_UP_OBJECT_ERROR } from './../messages/index';
 import { IAuthValidation, ISignin } from './../interfaces/IAuth';
 import { NextFunction, Request, Response } from "express";
@@ -12,5 +13,5 @@ export function signInMiddleware(req: Request, res: Response, next: NextFunction
     const data: IAuthValidation = signInObjectValidation(obj);
 
     if(data.status) next();
-    else return res.status(400).json({ message: data.message || SIGN_UP_OBJECT_ERROR });
+    else return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ message: data.message || SIGN_UP_OBJECT_ERROR });
 }

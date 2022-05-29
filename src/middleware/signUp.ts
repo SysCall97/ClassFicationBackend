@@ -2,6 +2,7 @@ import { SIGN_UP_OBJECT_ERROR } from './../messages/index';
 import { ISignup, IAuthValidation } from './../interfaces/IAuth';
 import { NextFunction, Request, Response } from "express";
 import { signUpObjectValidation } from "../helpers";
+import { StatusCodes } from 'http-status-codes';
 
 export function signUpMiddleware(req: Request, res: Response, next: NextFunction) {
     const obj: ISignup = {
@@ -14,5 +15,5 @@ export function signUpMiddleware(req: Request, res: Response, next: NextFunction
     const data: IAuthValidation = signUpObjectValidation(obj);
 
     if(data.status) next();
-    else return res.status(400).json({ message: data.message || SIGN_UP_OBJECT_ERROR });
+    else return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ message: data.message || SIGN_UP_OBJECT_ERROR });
 }
