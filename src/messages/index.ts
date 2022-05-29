@@ -10,3 +10,4 @@ export const INVALID_EMAIL: string = "Please fill a valid email address";
 export const INVALID_PASSWORD: string = "Please fill a valid password";
 export const INVALID_NAME: string = "Please fill a valid name";
 export const INVALID_ROLE: string = "Please select your role in the application";
+export const DUPLICATE_EMAIL_ERROR: string = "This email is already used.";

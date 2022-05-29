@@ -1,9 +1,10 @@
-import { SIGNUP_ERROR, SIGN_UP_SUCCESSFULL } from '../../messages/index';
+import { DUPLICATE_EMAIL_ERROR, SIGNUP_ERROR, SIGN_UP_SUCCESSFULL } from '../../messages/index';
 import {Request, Response} from 'express'
 import crypto from 'crypto'
 import userService from '../../services/User';
 import { IAuth } from '../../interfaces';
 import Token from '../../services/Token';
+import { StatusCodes } from 'http-status-codes';
 
 class SignUp {
     public static perform(req: Request, res: Response): Promise<any> {
@@ -17,7 +18,7 @@ class SignUp {
                 });
     
                 const token: string = Token.getToken(data);
-                return res.status(200).json({ 
+                return res.status(StatusCodes.CREATED).json({ 
                     message: SIGN_UP_SUCCESSFULL,
                     name: data.name,
                     email: data.email,
@@ -25,7 +26,13 @@ class SignUp {
                     token
                  });
             } catch (err: any) {
-                return res.status(500).json({ message: err.message || SIGNUP_ERROR });
+                let message;
+                if(err.code === 11000) {
+                    return res.status(StatusCodes.CONFLICT).json({ message: DUPLICATE_EMAIL_ERROR });
+                }
+                else {
+                    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: SIGNUP_ERROR });
+                }
             }
         });
     }
