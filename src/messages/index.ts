@@ -9,3 +9,4 @@ export const SIGN_UP_OBJECT_ERROR: string = "There is some missing data. Please 
 export const INVALID_EMAIL: string = "Please fill a valid email address";
 export const INVALID_PASSWORD: string = "Please fill a valid password";
 export const INVALID_NAME: string = "Please fill a valid name";
+export const INVALID_ROLE: string = "Please select your role in the application";
