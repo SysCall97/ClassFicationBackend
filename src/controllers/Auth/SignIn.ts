@@ -4,6 +4,7 @@ import crypto from 'crypto'
 import userService from '../../services/User';
 import { IAuth } from '../../interfaces';
 import Token from '../../services/Token';
+import { StatusCodes } from 'http-status-codes';
 
 class SignIn {
     public static perform(req: Request, res: Response): Promise<any> {
@@ -15,12 +16,12 @@ class SignIn {
                 });
     
                 if(!data.length) {
-                    return res.status(404).json({ message: INVALID_EMAIL_PASSWORD });
+                    return res.status(StatusCodes.UNAUTHORIZED).json({ message: INVALID_EMAIL_PASSWORD });
                 }
     
                 const token: string = Token.getToken(data[0]);
                 
-                return res.status(200).json({ 
+                return res.status(StatusCodes.OK).json({ 
                     message: SIGN_IN_SUCCESSFULL, 
                     name: data[0].name,
                     email: data[0].email,
@@ -28,7 +29,7 @@ class SignIn {
                     token 
                 });
             } catch (err: any) {
-                return res.status(500).json({ message: err.message || SIGNIN_ERROR });
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message || SIGNIN_ERROR });
             }
 
         });
