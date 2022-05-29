@@ -20,6 +20,6 @@ export async function authenticateMiddleWare(req: Request, res: Response, next: 
             next();
         }
     } catch (error) {
-        res.status(StatusCodes.UNAUTHORIZED).json({ message: error });
+        res.status(StatusCodes.UNAUTHORIZED).json({ message: UNAUTHORIZED_USER });
     }
 }
