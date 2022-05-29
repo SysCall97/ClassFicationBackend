@@ -13,7 +13,7 @@ class CreateClass {
                 className: req.body.className,
                 uid: req.body.uid
             });
-            res.status(StatusCodes.CREATED).json({ data });
+            res.status(StatusCodes.CREATED).json({ classCode: data });
         } catch (error) {
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: CLASS_CREATE_FAILED });
         }

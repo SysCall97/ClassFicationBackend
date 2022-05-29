@@ -1,5 +1,5 @@
-import { ICreateClass } from './IClass';
+import { ICreateClass, ICreatePost } from './IClass';
 import { ISignup, IAuth, ISignin, ISignout, IAuthValidation } from './IAuth';
 export {
-    ISignup, IAuth, ISignin, ISignout, IAuthValidation, ICreateClass
+    ISignup, IAuth, ISignin, ISignout, IAuthValidation, ICreateClass, ICreatePost
 }

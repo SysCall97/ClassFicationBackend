@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
     role: {
         type: Number,
         required: true
-    }
+    },
+    joinedClasses: [String]
 }, {
     timestamps: true
 });

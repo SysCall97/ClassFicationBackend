@@ -25,3 +25,8 @@ export interface IAuthValidation {
     status: Boolean,
     message: string
 }
+
+export interface IIsJoined { 
+    uid: string, 
+    classCode: string
+}

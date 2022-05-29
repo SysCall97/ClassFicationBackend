@@ -14,6 +14,18 @@ class ClassService {
             }
         });
     }
+
+    public static isClassExist(classCode: string): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const val = await Class.exists({code: classCode});
+                resolve(!!val);
+            } catch (error) {
+                resolve(false);
+            }
+
+        });
+    }
 }
 
 
