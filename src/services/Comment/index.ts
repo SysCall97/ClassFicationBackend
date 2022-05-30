@@ -18,7 +18,6 @@ class CommentService {
             } catch (error) {
                 await session.abortTransaction();
                 session.endSession();
-                console.log(error);
                 reject(error);
             }
         });
