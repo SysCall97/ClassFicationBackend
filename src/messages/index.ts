@@ -17,3 +17,6 @@ export const CLASS_NAME_REQUIRED: string = "Class name required";
 export const CLASS_NOT_FOUND: string = "Class not found";
 export const TRY_AGAIN_LATER: string = "Something's wrong. Try later";
 export const JOIN_THE_CLASS: string = "You've not joined the class. Join the class with proper class code first";
+export const CLASS_CODE_REQUIRED: string = "Class code required";
+export const CLASS_JOIN_FAILED: string = "Failed to join the class. Please try later";
+export const ALREADY_JOINED_CLASS: string = "You've already joined the class";
