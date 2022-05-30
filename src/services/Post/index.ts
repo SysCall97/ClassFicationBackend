@@ -1,5 +1,6 @@
 import { ICreatePost, IGetPost } from "../../interfaces";
 import Post from "../../models/Post";
+import User from "../../models/User";
 
 class PostService {
     public static async createPost(data: ICreatePost): Promise<any> {
@@ -19,7 +20,13 @@ class PostService {
                 let posts;
                 if(data.role === 2) posts = await Post.find({classCode: data.classCode});
                 else posts = await Post.find({classCode: data.classCode, uid: data.uid});
-                resolve({...posts});
+                let _posts: any[] = await Promise.all(posts.map(async post => {
+                    const user = await User.findById(post.uid).select('name');
+                    post.userName = user?.name;
+                    const obj = {uid: post.uid, userName: user?.name, _id: post._id, classCode: post.classCode, post: post.post, commentIds: post.commentIds};
+                    return obj;
+                }));
+                resolve(_posts);
             } catch (error) {
                 reject(error);
             }

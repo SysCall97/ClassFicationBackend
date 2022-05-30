@@ -19,3 +19,10 @@ export interface IGetPost {
     uid: string,
     role: number
 }
+
+export interface ICreateComment {
+    classCode: string,
+    postId: string,
+    uid: string,
+    comment: string
+}

@@ -1,10 +1,7 @@
-import { CLASS_NOT_FOUND, JOIN_THE_CLASS, TRY_AGAIN_LATER } from './../../../messages/index';
-import mongoose from 'mongoose';
+import { TRY_AGAIN_LATER } from './../../../messages/index';
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from "express";
 import PostService from '../../../services/Post';
-// import UserService from '../../../services/User';
-// import ClassService from '../../../services/_Class';
 
 class GetPost {
     public static async perform(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
