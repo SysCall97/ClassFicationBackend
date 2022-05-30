@@ -3,28 +3,18 @@ import mongoose from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from "express";
 import PostService from '../../../services/Post';
-import UserService from '../../../services/User';
-import ClassService from '../../../services/_Class';
+// import UserService from '../../../services/User';
+// import ClassService from '../../../services/_Class';
 
 class GetPost {
     public static async perform(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
         try {
             const classCode = req.params.class_code;
             const uid = req.body.uid;
-            
-            const isClassExist = await ClassService.isClassExist(classCode);
-            if(!isClassExist) {
-                return res.status(StatusCodes.NOT_FOUND).json({ message: CLASS_NOT_FOUND });
-            }
-
-            const isJoinedClass = await UserService.isJoinedClass({uid, classCode});
-            if(!isJoinedClass) {
-                return res.status(StatusCodes.NOT_FOUND).json({ message: JOIN_THE_CLASS });
-            }
 
             const data = await PostService.getPost({
                 classCode,
-                uid: req.body.uid,
+                uid,
                 role: req.body.role
             });
 

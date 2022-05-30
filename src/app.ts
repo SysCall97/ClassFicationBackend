@@ -3,7 +3,7 @@ import cors from 'cors';
 import userRoute from './routes/userRoute';
 import db from './database/mongo'
 import classRoute from './routes/classRoute';
-import { authenticateMiddleWare } from './middleware';
+import { authenticateMiddleware } from './middleware';
 
 require('dotenv').config();
 
@@ -15,7 +15,7 @@ app.use(cors());
 
 app.get('/', (req: Request, res: Response) => res.send('Everything is working fine'));
 app.use('/user', userRoute);
-app.use('/class', authenticateMiddleWare, classRoute);
+app.use('/class', authenticateMiddleware, classRoute);
 
 const port = process.env.PORT || 5000;
 

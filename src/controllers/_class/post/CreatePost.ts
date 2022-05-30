@@ -11,21 +11,10 @@ class CreatePost {
         try {
             const classCode = req.params.class_code;
             const uid = req.body.uid;
-            
-            const isClassExist = await ClassService.isClassExist(classCode);
-            if(!isClassExist) {
-                return res.status(StatusCodes.NOT_FOUND).json({ message: CLASS_NOT_FOUND });
-            }
-
-            const isJoinedClass = await UserService.isJoinedClass({uid, classCode});
-            if(!isJoinedClass) {
-                return res.status(StatusCodes.NOT_FOUND).json({ message: JOIN_THE_CLASS });
-            }
-
             const data = await PostService.createPost({
                 classCode,
-                post: req.body.post,
-                uid: req.body.uid
+                uid,
+                post: req.body.post
             });
 
             return res.status(StatusCodes.CREATED).json({ data });

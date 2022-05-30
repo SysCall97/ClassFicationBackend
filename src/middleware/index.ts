@@ -1,6 +1,8 @@
 import { signUpMiddleware } from './signUp';
 import { signInMiddleware } from './signIn'
-import { authenticateMiddleWare } from './authenticate';
+import { authenticateMiddleware } from './authenticate';
+import { checkClassExistsMiddleware } from './checkClassExist';
+import { checkJoinedClassMiddleware } from './checkJoinedClass';
 export {
-    signUpMiddleware, signInMiddleware, authenticateMiddleWare
+    signUpMiddleware, signInMiddleware, authenticateMiddleware, checkClassExistsMiddleware, checkJoinedClassMiddleware
 }

@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import Token from '../services/Token';
 import { UNAUTHORIZED_USER } from './../messages/index';
 
-export async function authenticateMiddleWare(req: Request, res: Response, next: NextFunction) {
+export async function authenticateMiddleware(req: Request, res: Response, next: NextFunction) {
     try {
         const token: string = req.headers.authorization?.split(' ')[1]!;
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);

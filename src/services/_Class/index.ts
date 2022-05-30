@@ -38,12 +38,6 @@ class ClassService {
             try {
                 const id = data.uid;
                 const classCode = data.classCode;
-
-                const isClassExists = await this.isClassExist(classCode);
-                if(!isClassExists) {
-                    reject({ _message: CLASS_NOT_FOUND, httpCode: StatusCodes.NOT_FOUND });
-                }
-
                 const user = await User.findById(id).select('joinedClasses');
                 if(user.joinedClasses.includes(classCode)) {
                     reject({ _message: ALREADY_JOINED_CLASS, httpCode: StatusCodes.CONFLICT });
