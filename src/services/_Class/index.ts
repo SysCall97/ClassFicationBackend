@@ -41,10 +41,11 @@ class ClassService {
                 const user = await User.findById(id).select('joinedClasses');
                 if(user.joinedClasses.includes(classCode)) {
                     reject({ _message: ALREADY_JOINED_CLASS, httpCode: StatusCodes.CONFLICT });
+                } else {
+                    await User.updateOne({_id: id}, { $push: { joinedClasses: [classCode] } });
+                    resolve(data.classCode);
                 }
 
-                await User.updateOne({_id: id}, { $push: { joinedClasses: [classCode] } });
-                resolve(data.classCode);
             } catch (error) {
                 reject(error);
             }
@@ -52,7 +53,7 @@ class ClassService {
     }
 
     public static isClassExist(classCode: string): Promise<boolean> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
             try {
                 const val = await Class.exists({code: classCode});
                 resolve(!!val);

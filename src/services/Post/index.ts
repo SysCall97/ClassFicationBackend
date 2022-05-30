@@ -25,6 +25,18 @@ class PostService {
             }
         });
     }
+
+    public static isPostExists(post_id: string): Promise<boolean> {
+        return new Promise(async (resolve) => {
+            try {
+                const val = await Post.exists({_id: post_id});
+                resolve(!!val);
+            } catch (error) {
+                resolve(false);
+            }
+
+        });
+    }
 }
 
 
