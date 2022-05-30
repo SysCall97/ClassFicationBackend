@@ -12,3 +12,8 @@ export interface IJoinClass {
     classCode: string,
     uid: string
 }
+
+export interface IGetPost {
+    classCode: string,
+    uid: string
+}

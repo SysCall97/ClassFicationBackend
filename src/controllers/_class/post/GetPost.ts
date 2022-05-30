@@ -6,7 +6,7 @@ import PostService from '../../../services/Post';
 import UserService from '../../../services/User';
 import ClassService from '../../../services/_Class';
 
-class CreatePost {
+class GetPost {
     public static async perform(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
         try {
             const classCode = req.params.class_code;
@@ -22,9 +22,9 @@ class CreatePost {
                 return res.status(StatusCodes.NOT_FOUND).json({ message: JOIN_THE_CLASS });
             }
 
-            const data = await PostService.createPost({
+            const data = await PostService.getPost({
                 classCode,
-                post: req.body.post
+                uid: req.body.uid
             });
 
             return res.status(StatusCodes.CREATED).json({ data });
@@ -34,4 +34,4 @@ class CreatePost {
     }
 }
 
-export default CreatePost;
+export default GetPost;

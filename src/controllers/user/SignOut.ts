@@ -4,13 +4,13 @@ import {Request, Response} from 'express'
 import UserService from '../../services/User';
 
 class SignOut {
-    public static async perform(req: Request, res: Response): Promise<void> {
+    public static async perform(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
         try {
             const token: string = req.headers.authorization?.split(' ')[1]!;
             await UserService.signOut({token});
-            res.status(StatusCodes.OK).json({ message: SIGN_OUT_SUCCESSFULL });
+            return res.status(StatusCodes.OK).json({ message: SIGN_OUT_SUCCESSFULL });
         } catch (err: any) {
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err?.message || SIGN_OUT_FAILURE });
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err?.message || SIGN_OUT_FAILURE });
         }
     }
 }

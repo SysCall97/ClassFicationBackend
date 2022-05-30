@@ -7,7 +7,7 @@ import Token from '../../services/Token';
 import { StatusCodes } from 'http-status-codes';
 
 class SignIn {
-    public static async perform(req: Request, res: Response): Promise<void> {
+    public static async perform(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
         try {
             const data: IAuth[] = await UserService.signIn({
                 email: req.body.email,
@@ -15,12 +15,12 @@ class SignIn {
             });
 
             if(!data.length) {
-                res.status(StatusCodes.UNAUTHORIZED).json({ message: INVALID_EMAIL_PASSWORD });
+                return res.status(StatusCodes.UNAUTHORIZED).json({ message: INVALID_EMAIL_PASSWORD });
             }
 
             const token: string = Token.getToken(data[0]);
             
-            res.status(StatusCodes.OK).json({ 
+            return res.status(StatusCodes.OK).json({ 
                 message: SIGN_IN_SUCCESSFULL, 
                 name: data[0].name,
                 uid: data[0]._id,
@@ -29,7 +29,7 @@ class SignIn {
                 token 
             });
         } catch (err: any) {
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message || SIGNIN_ERROR });
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message || SIGNIN_ERROR });
         }
     }
 }

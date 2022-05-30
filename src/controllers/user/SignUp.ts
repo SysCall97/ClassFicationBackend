@@ -7,7 +7,7 @@ import Token from '../../services/Token';
 import { StatusCodes } from 'http-status-codes';
 
 class SignUp {
-    public static async perform(req: Request, res: Response): Promise<void> {
+    public static async perform(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
         try {
             const data: IAuth = await UserService.signUp({
                 name: req.body.name,
@@ -17,7 +17,7 @@ class SignUp {
             });
 
             const token: string = Token.getToken(data);
-            res.status(StatusCodes.CREATED).json({ 
+            return res.status(StatusCodes.CREATED).json({ 
                 message: SIGN_UP_SUCCESSFULL,
                 name: data.name,
                 uid: data._id,
@@ -27,10 +27,10 @@ class SignUp {
             });
         } catch (err: any) {
             if(err.code === 11000) {
-                res.status(StatusCodes.CONFLICT).json({ message: DUPLICATE_EMAIL_ERROR });
+                return res.status(StatusCodes.CONFLICT).json({ message: DUPLICATE_EMAIL_ERROR });
             }
             else {
-                res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: SIGNUP_ERROR });
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: SIGNUP_ERROR });
             }
         }
     }
