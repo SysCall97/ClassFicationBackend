@@ -16,8 +16,8 @@ class PostService {
     public static async getPost(data: IGetPost): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                await Post.find({classCode: data.classCode});
-                resolve({...data});
+                const posts = await Post.find({classCode: data.classCode});
+                resolve({...posts});
             } catch (error) {
                 reject(error);
             }

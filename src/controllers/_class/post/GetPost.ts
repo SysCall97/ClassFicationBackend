@@ -27,7 +27,7 @@ class GetPost {
                 uid: req.body.uid
             });
 
-            return res.status(StatusCodes.CREATED).json({ data });
+            return res.status(StatusCodes.OK).json({ data });
         } catch (error) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: TRY_AGAIN_LATER });
         }
