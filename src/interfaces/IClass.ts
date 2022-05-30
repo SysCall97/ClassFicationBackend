@@ -5,6 +5,7 @@ export interface ICreateClass {
 
 export interface ICreatePost {
     classCode: string,
+    uid: string,
     post: string
 }
 
@@ -15,5 +16,6 @@ export interface IJoinClass {
 
 export interface IGetPost {
     classCode: string,
-    uid: string
+    uid: string,
+    role: number
 }

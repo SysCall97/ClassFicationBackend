@@ -24,7 +24,8 @@ class GetPost {
 
             const data = await PostService.getPost({
                 classCode,
-                uid: req.body.uid
+                uid: req.body.uid,
+                role: req.body.role
             });
 
             return res.status(StatusCodes.OK).json({ data });

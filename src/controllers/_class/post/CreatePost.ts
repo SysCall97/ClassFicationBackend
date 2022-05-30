@@ -24,7 +24,8 @@ class CreatePost {
 
             const data = await PostService.createPost({
                 classCode,
-                post: req.body.post
+                post: req.body.post,
+                uid: req.body.uid
             });
 
             return res.status(StatusCodes.CREATED).json({ data });

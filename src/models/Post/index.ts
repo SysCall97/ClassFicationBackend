@@ -14,6 +14,11 @@ const postSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    uid: {
+        type: String,
+        trim: true,
+        required: true
+    },
     commentIds: [String]
 }, {
     timestamps: true

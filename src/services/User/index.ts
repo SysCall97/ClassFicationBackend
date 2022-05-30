@@ -23,7 +23,7 @@ class UserService {
     public static signIn (data: ISignin): Promise<any> {
         return new Promise((resolve, reject) => {
             try {
-                const val = User.find({ email: data.email, password: data.password, joinedClasses: [] });
+                const val = User.find({ email: data.email, password: data.password });
                 resolve(val);
             } catch (err) {
                 reject(err)
