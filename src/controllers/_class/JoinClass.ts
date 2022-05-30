@@ -9,11 +9,13 @@ class JoinClass {
             if(req.params.class_code === '' || !req.params.class_code) {
                 res.status(StatusCodes.BAD_REQUEST).json({ message: CLASS_CODE_REQUIRED});
             }
+            
             const data = await ClassService.joinClass({
                 classCode: req.params.class_code,
                 uid: req.body.uid
             });
             res.status(StatusCodes.CREATED).json({ classCode: data });
+
         } catch (error: any) {
             res.status(error.httpCode || StatusCodes.INTERNAL_SERVER_ERROR).json({ message:  error._message || CLASS_JOIN_FAILED });
         }
