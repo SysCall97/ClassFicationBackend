@@ -27,7 +27,7 @@ export interface ICreateComment {
     comment: string
 }
 
-export interface ICheckPostOwner {
-    postId: string,
+export interface ICheckEntityOwner {
+    entityId: string,
     uid: string,
 }

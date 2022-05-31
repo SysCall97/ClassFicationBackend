@@ -19,6 +19,11 @@ const commentSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    active: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
     comment: {
         type: String,
         trim: true,

@@ -5,6 +5,7 @@ import { checkClassExistsMiddleware } from './checkClassExist';
 import { checkJoinedClassMiddleware } from './checkJoinedClass';
 import { checkPostExistsMiddleware } from './checkPostExist';
 import { checkPostOwnerMiddleware } from './checkPostOwner';
+import { checkCommentOwnerMiddleware } from './checkCommentOwner';
 export {
     signUpMiddleware, 
     signInMiddleware, 
@@ -12,5 +13,6 @@ export {
     checkClassExistsMiddleware, 
     checkJoinedClassMiddleware, 
     checkPostExistsMiddleware,
-    checkPostOwnerMiddleware
+    checkPostOwnerMiddleware,
+    checkCommentOwnerMiddleware
 }

@@ -1,4 +1,4 @@
-import { ICheckPostOwner, ICreatePost, IGetPost } from "../../interfaces";
+import { ICheckEntityOwner, ICreatePost, IGetPost } from "../../interfaces";
 import Post from "../../models/Post";
 import User from "../../models/User";
 
@@ -45,10 +45,10 @@ class PostService {
         });
     }
 
-    public static isPostOwner(data: ICheckPostOwner): Promise<boolean> {
+    public static isPostOwner(data: ICheckEntityOwner): Promise<boolean> {
         return new Promise(async (resolve) => {
             try {
-                const val = await Post.exists({_id: data.postId, uid: data.uid});
+                const val = await Post.exists({_id: data.entityId, uid: data.uid});
                 resolve(!!val);
             } catch (error) {
                 resolve(false);
