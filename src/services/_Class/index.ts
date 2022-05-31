@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import mongoose from "mongoose";
 import { getRandomString } from "../../helpers/randomStringGenerator";
 import { ICreateClass, IJoinClass } from "../../interfaces";
-import { ALREADY_JOINED_CLASS, CLASS_NOT_FOUND } from "../../messages";
+import { ALREADY_JOINED_CLASS } from "../../messages";
 import Class from "../../models/Class";
 import User from "../../models/User";
 
@@ -19,7 +19,7 @@ class ClassService {
                 session.startTransaction();
 
                 await Class.create({className: data.className, uid: data.uid, code: classCode});
-                await User.updateOne({id: id}, { $push: { joinedClasses: [classCode] } });
+                await User.updateOne({_id: id}, { $push: { joinedClasses: [classCode] } });
                 await session.commitTransaction();
                 session.endSession();
 

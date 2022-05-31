@@ -18,8 +18,8 @@ class PostService {
         return new Promise(async (resolve, reject) => {
             try {
                 let posts;
-                if(data.role === 2) posts = await Post.find({classCode: data.classCode});
-                else posts = await Post.find({classCode: data.classCode, uid: data.uid});
+                if(data.role === 2) posts = await Post.find({classCode: data.classCode, active: true});
+                else posts = await Post.find({classCode: data.classCode, uid: data.uid, active: true});
                 let _posts: any[] = await Promise.all(posts.map(async post => {
                     const user = await User.findById(post.uid).select('name');
                     post.userName = user?.name;
@@ -36,7 +36,7 @@ class PostService {
     public static isPostExists(post_id: string): Promise<boolean> {
         return new Promise(async (resolve) => {
             try {
-                const val = await Post.exists({_id: post_id});
+                const val = await Post.exists({_id: post_id, active: true});
                 resolve(!!val);
             } catch (error) {
                 resolve(false);

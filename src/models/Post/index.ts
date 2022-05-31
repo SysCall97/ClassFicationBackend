@@ -15,9 +15,14 @@ const postSchema = new mongoose.Schema({
         required: true
     },
     uid: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         trim: true,
         required: true
+    },
+    active: {
+        type: Boolean,
+        required: true,
+        default: true
     },
     commentIds: [String]
 }, {
