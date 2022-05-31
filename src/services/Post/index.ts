@@ -33,10 +33,10 @@ class PostService {
         });
     }
 
-    public static isPostExists(post_id: string): Promise<boolean> {
+    public static isPostExists(postId: string): Promise<boolean> {
         return new Promise(async (resolve) => {
             try {
-                const val = await Post.exists({_id: post_id, active: true});
+                const val = await Post.exists({_id: postId, active: true});
                 resolve(!!val);
             } catch (error) {
                 resolve(false);
@@ -54,6 +54,17 @@ class PostService {
                 resolve(false);
             }
 
+        });
+    }
+
+    public static softDelete(postId: string): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await Post.updateOne({_id: postId}, { $set: { active: false }});
+                resolve(true);
+            } catch (error) {
+                reject();
+            }
         });
     }
 }

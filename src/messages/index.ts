@@ -22,3 +22,5 @@ export const CLASS_JOIN_FAILED: string = "Failed to join the class. Please try l
 export const ALREADY_JOINED_CLASS: string = "You've already joined the class";
 export const POST_NOT_FOUNT: string = "Post not found";
 export const POST_ACTION_FORBIDDEN: string = "You are not owner of this post";
+export const POST_DELETE_SUCCESSFUL: string = "Post deleted successfully";
+export const POST_DELETE_FAILED: string = "Post delete failed";
