@@ -37,11 +37,15 @@ class PostService {
                     const user = await User.findById(post.uid).select('name');
                     post.userName = user?.name;
                     const commentIds = post.commentIds;
-                    const comments = await Promise.all(commentIds.map(async (commentId: any) => {
+                    let comments = await Promise.all(commentIds.map(async (commentId: any) => {
                         const comment = await Comment.findById(commentId);
-                        const user = await User.findById(comment.uid).select('name');
-                        return { commentId: comment._id, comment: comment.comment, userName: user.name };
-                    }));
+                        if(comment.active === true) {
+                            const user = await User.findById(comment.uid).select('name');
+                            return { commentId: comment._id, comment: comment.comment, userName: user.name };
+                        }
+                    }
+                    ));
+                    comments = comments.filter(Boolean)
                     const obj = {uid: post.uid, userName: user?.name, _id: post._id, classCode: post.classCode, post: post.post, comments};
                     return obj;
                 }));

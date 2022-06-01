@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ICheckEntityOwner, ICreateComment } from "../../interfaces";
+import { ICheckEntityOwner, ICreateComment, IEditEntity } from "../../interfaces";
 import Comment from "../../models/Comment";
 import Post from "../../models/Post";
 
@@ -18,6 +18,17 @@ class CommentService {
             } catch (error) {
                 await session.abortTransaction();
                 session.endSession();
+                reject(error);
+            }
+        });
+    }
+
+    public static async editComment(data: IEditEntity): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const val = await Comment.updateOne({_id: data.id}, { $set: { comment: data.details }});
+                resolve({comment: data.details});
+            } catch (error) {
                 reject(error);
             }
         });
