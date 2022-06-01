@@ -6,6 +6,7 @@ import CreateComment from '../controllers/_class/post/comment/CreateComment';
 import DeleteComment from '../controllers/_class/post/comment/DeleteComment';
 import CreatePost from '../controllers/_class/post/CreatePost';
 import DeletePost from '../controllers/_class/post/DeletePost';
+import EditPost from '../controllers/_class/post/EditPost';
 import GetPost from '../controllers/_class/post/GetPost';
 import { 
     checkClassExistsMiddleware, 
@@ -22,6 +23,7 @@ const classRoute: Router = Router();
 classRoute.post('/create', CreateClass.perform);
 classRoute.put('/:class_code/join', checkClassExistsMiddleware, JoinClass.perform);
 classRoute.post('/:class_code/post', checkClassExistsMiddleware, checkJoinedClassMiddleware, CreatePost.perform);
+classRoute.put('/:class_code/post/:post_id', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, checkPostOwnerMiddleware, EditPost.perform);
 classRoute.get('/:class_code/post', checkClassExistsMiddleware, checkJoinedClassMiddleware, GetPost.perform);
 classRoute.delete('/:class_code/post/:post_id', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, checkPostOwnerMiddleware, DeletePost.perform);
 classRoute.post('/:class_code/post/:post_id/comment', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, CreateComment.perform);

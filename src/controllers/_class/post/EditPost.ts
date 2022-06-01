@@ -3,22 +3,21 @@ import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from "express";
 import PostService from '../../../services/Post';
 
-class CreatePost {
+class EditPost {
     public static async perform(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
         try {
-            const classCode = req.params.class_code;
-            const uid = req.body.uid;
-            const data = await PostService.createPost({
-                classCode,
-                uid,
-                post: req.body.post
+            const postId = req.params.post_id;
+            const post = req.body.post;
+            const data = await PostService.editPost({
+                id: postId,
+                details: post
             });
 
-            return res.status(StatusCodes.CREATED).json({ data });
+            return res.status(StatusCodes.OK).json({ data });
         } catch (error) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: TRY_AGAIN_LATER });
         }
     }
 }
 
-export default CreatePost;
+export default EditPost;

@@ -1,4 +1,4 @@
-import { ICheckEntityOwner, ICreatePost, IGetPost } from "../../interfaces";
+import { ICheckEntityOwner, ICreatePost, IEditEntity, IGetPost } from "../../interfaces";
 import Comment from "../../models/Comment";
 import Post from "../../models/Post";
 import User from "../../models/User";
@@ -9,6 +9,17 @@ class PostService {
             try {
                 await Post.create({classCode: data.classCode, post: data.post, uid: data.uid, commentIds: []});
                 resolve({...data, comments: []});
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    public static async editPost(data: IEditEntity): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const val = await Post.updateOne({_id: data.id}, { $set: { post: data.details }});
+                resolve({post: data.details});
             } catch (error) {
                 reject(error);
             }

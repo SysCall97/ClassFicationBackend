@@ -31,3 +31,7 @@ export interface ICheckEntityOwner {
     entityId: string,
     uid: string,
 }
+export interface IEditEntity {
+    id: string,
+    details: string
+}
