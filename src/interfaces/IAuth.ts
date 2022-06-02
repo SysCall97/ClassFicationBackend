@@ -12,6 +12,14 @@ export interface IAuth {
     _id: string
 };
 
+export interface IUpdate {
+    _id: string
+    role?: any
+    email?: any
+    name?: any
+    password?: string
+};
+
 export interface ISignin {
     email: string,
     password: string

@@ -28,3 +28,6 @@ export const POST_DELETE_SUCCESSFUL: string = "Post deleted successfully";
 export const POST_DELETE_FAILED: string = "Post delete failed";
 export const COMMENT_DELETE_SUCCESSFUL: string = "Comment deleted successfully";
 export const COMMENT_DELETE_FAILED: string = "Comment delete failed";
+export const UPDATE_SUCCESSFULL: string = "Updated user info successfully";
+export const UPDATE_ERROR: string = "User info update failed";
+export const PROVIDE_UPDATE_USER_DATA: string = "Provide correct information to update your info";

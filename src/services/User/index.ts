@@ -1,4 +1,4 @@
-import { IIsJoined, ISignout } from './../../interfaces/IAuth';
+import { IIsJoined, ISignout, IUpdate } from './../../interfaces/IAuth';
 import { ISignup, ISignin } from './../../interfaces';
 import User from '../../models/User';
 import Dump from '../../models/Token';
@@ -14,6 +14,21 @@ class UserService {
                 } else {
                     reject({code: 11000});
                 }
+            } catch (error) {
+                reject({});
+            }
+        });
+    }
+
+    public static updateUser (data: IUpdate): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const { _id, ...update } = data;
+                const updatedUser = await User.findOneAndUpdate({ _id: _id }, update, {
+                    new: true
+                });
+
+                resolve(updatedUser);
             } catch (error) {
                 reject({});
             }
