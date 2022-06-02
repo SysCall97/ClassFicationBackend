@@ -4,6 +4,7 @@ import userRoute from './routes/userRoute';
 import db from './database/mongo'
 import classRoute from './routes/classRoute';
 import { authenticateMiddleware } from './middleware';
+import authRoute from './routes/authRoute';
 
 require('dotenv').config();
 
@@ -15,6 +16,7 @@ app.use(cors());
 
 app.get('/', (req: Request, res: Response) => res.send('Everything is working fine'));
 app.use('/user', userRoute);
+app.use('/auth', authRoute);
 app.use('/class', authenticateMiddleware, classRoute);
 
 const port = process.env.PORT || 5000;
