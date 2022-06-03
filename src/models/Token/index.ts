@@ -12,7 +12,8 @@ const dumpedTokenSchema = new mongoose.Schema({
     signedOutAt: {
         type: Date,
         default: Date.now()
-    }
+    },
+    expire_at: {type: Date, default: Date.now, expires: 7200} 
 });
 
 export default mongoose.model('dumpedToken', dumpedTokenSchema);
