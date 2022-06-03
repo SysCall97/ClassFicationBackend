@@ -1,3 +1,3 @@
-import db from './mongo';
+import MongoDB from './mongo';
 
-export default db;
+export { MongoDB };

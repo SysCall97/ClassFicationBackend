@@ -1,5 +1,6 @@
 import { ICreateClass, ICreatePost, IJoinClass, IGetPost, ICreateComment, ICheckEntityOwner, IEditEntity } from './IClass';
 import { ISignup, IAuth, ISignin, ISignout, IAuthValidation, IUpdate } from './IAuth';
+import { IDb } from './IDb';
 export {
     ISignup, 
     IAuth, 
@@ -13,5 +14,6 @@ export {
     ICreateComment, 
     ICheckEntityOwner,
     IEditEntity,
-    IUpdate
+    IUpdate,
+    IDb
 }

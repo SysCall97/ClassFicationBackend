@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import { IDb } from '../interfaces';
 
-const db = {
-    connect() {
+class MongoDB implements IDb {
+    connect(callback: Function): Promise<void> {
         return new Promise<void>((resolve, rejected) => {
             const uri = process.env.URI;
             
@@ -16,24 +17,12 @@ const db = {
                         rejected(err);
                     } else {
                         console.log("Successfully connected");
-                        resolve();
+                        callback();
                     }
                 }
             );
-        }); 
-    
-    },
-
-    disconnect() {
-        console.log("this is disconnect");
-        return new Promise<void>((resolve) => {
-            // mongoose.disconnect();
-            mongoose.connection.close();
-            resolve();
-        }); 
+        });
     }
 }
 
-
-
-export default db;
+export default MongoDB;
