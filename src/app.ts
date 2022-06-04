@@ -5,6 +5,7 @@ import classRoute from './routes/classRoute';
 import { authenticateMiddleware } from './middleware';
 import authRoute from './routes/authRoute';
 import { MongoDB } from './database';
+import { IDb } from './interfaces';
 
 require('dotenv').config();
 
@@ -23,5 +24,5 @@ const startApp = () => {
     app.listen(port, () => console.log("Server is running"));
 }
 
-const db = new MongoDB();
+const db: IDb = new MongoDB();
 db.connect(startApp);
