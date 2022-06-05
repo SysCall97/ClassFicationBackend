@@ -7,8 +7,9 @@ class PostService {
     public static async createPost(data: ICreatePost): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                await Post.create({classCode: data.classCode, post: data.post, uid: data.uid, commentIds: []});
-                resolve({...data, comments: []});
+                const _data = await Post.create({classCode: data.classCode, post: data.post, uid: data.uid, commentIds: []});
+                resolve(_data);
+                // resolve({...data, comments: []});
             } catch (error) {
                 reject(error);
             }

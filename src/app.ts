@@ -6,6 +6,7 @@ import { authenticateMiddleware } from './middleware';
 import authRoute from './routes/authRoute';
 import { MongoDB } from './database';
 import { IDb } from './interfaces';
+import seedRoute from './routes/seedRoute';
 
 require('dotenv').config();
 
@@ -15,6 +16,7 @@ const startApp = () => {
     app.use(cors());
     
     app.get('/', (req: Request, res: Response) => res.send('Everything is working fine'));
+    app.use('/seed', seedRoute)
     app.use('/user', userRoute);
     app.use('/auth', authRoute);
     app.use('/class', authenticateMiddleware, classRoute);
