@@ -2,6 +2,7 @@ version: '3'
 services:
   mongoDb:
     image: mongo
+    container_name: mongoDb
     ports:
       - 27017:27017
     environment:

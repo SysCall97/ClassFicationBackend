@@ -6,7 +6,7 @@ docker run -d \
 -p27017:27017 \
 -e MONGO_INITDB_ROOT_USERNAME=admin \
 -e MONGO_INITDB_ROOT_PASSWORD=password \
---net some-network \
+--net classfication-network \
 --name mongoDb \
 mongo
 
@@ -16,7 +16,7 @@ docker run -d \
 -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
 -e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
 -e ME_CONFIG_MONGODB_PORT=27017 \
---net some-network \
+--net classfication-network \
 -e ME_CONFIG_MONGODB_SERVER=mongoDb \
 --name mongo-express \
 mongo-express:0.54
