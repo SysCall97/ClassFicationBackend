@@ -1,14 +1,10 @@
 import express, {Application, Request, Response} from 'express';
 import cors from 'cors';
-import userRoute from './routes/userRoute';
-import classRoute from './routes/classRoute';
-import { authenticateMiddleware } from './middleware';
-import authRoute from './routes/authRoute';
 import { MongoDB } from './database';
 import { IDb } from './interfaces';
-import seedRoute from './routes/seedRoute';
 import cluster from 'cluster';
 import { cpus } from 'os';
+import { router } from './routes';
 
 require('dotenv').config();
 
@@ -18,10 +14,7 @@ const startApp = () => {
     app.use(cors());
     
     app.get('/', (req: Request, res: Response) => res.send('Everything is working fine'));
-    app.use('/seed', seedRoute)
-    app.use('/user', userRoute);
-    app.use('/auth', authRoute);
-    app.use('/class', authenticateMiddleware, classRoute);
+    app.use("/api/v1", router);
     
     const port = process.env.PORT || 5000;
     
