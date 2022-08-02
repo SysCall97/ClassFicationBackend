@@ -31,3 +31,4 @@ export const COMMENT_DELETE_FAILED: string = "Comment delete failed";
 export const UPDATE_SUCCESSFULL: string = "Updated user info successfully";
 export const UPDATE_ERROR: string = "User info update failed";
 export const PROVIDE_UPDATE_USER_DATA: string = "Provide correct information to update your info";
+export const TOKEN_STILL_ALIVE: string = "Token Still alive";
