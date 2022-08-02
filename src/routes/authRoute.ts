@@ -6,7 +6,7 @@ import { signInMiddleware } from '../middleware';
 const authRoute: Router = Router();
 
 // Routes
-authRoute.get('/signin', signInMiddleware, SignIn.perform);
+authRoute.post('/signin', signInMiddleware, SignIn.perform);
 authRoute.post('/signout', SignOut.perform);
 
 export default authRoute;
