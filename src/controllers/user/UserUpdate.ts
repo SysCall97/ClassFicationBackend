@@ -2,8 +2,8 @@ import { validatePassword } from './../../helpers/passwordValidation';
 import { validateEmail } from './../../helpers/emailValidation';
 import { validateName } from './../../helpers/nameValidation';
 import { PROVIDE_UPDATE_USER_DATA, UPDATE_ERROR, UPDATE_SUCCESSFULL } from '../../messages/index';
-import {Request, Response} from 'express'
-import crypto from 'crypto'
+import {Request, Response} from 'express';
+import crypto from 'crypto';
 import UserService from '../../services/User';
 import { IAuth, IUpdate } from '../../interfaces';
 import Token from '../../services/Token';
