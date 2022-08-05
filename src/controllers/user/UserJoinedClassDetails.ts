@@ -16,6 +16,7 @@ class UserJoinedClassDetails {
                 response.push({
                     className: _class.className,
                     classCode: _class.code,
+                    numOfStudents: _class.numOfStudents
                 })
             }
             return res.status(StatusCodes.OK).json(response);
