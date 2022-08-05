@@ -43,7 +43,8 @@ class ClassService {
                     reject({ _message: ALREADY_JOINED_CLASS, httpCode: StatusCodes.CONFLICT });
                 } else {
                     await User.updateOne({_id: id}, { $push: { joinedClasses: [classCode] } });
-                    resolve(data.classCode);
+                    const className = await this.getClassName(classCode);
+                    resolve({ className, classCode: data.classCode });
                 }
 
             } catch (error) {
@@ -59,6 +60,18 @@ class ClassService {
                 resolve(!!val);
             } catch (error) {
                 resolve(false);
+            }
+
+        });
+    }
+
+    public static getClassName(classCode: string): Promise<any> {
+        return new Promise(async (resolve) => {
+            try {
+                const val = await Class.findOne({code: classCode});
+                resolve(val.className);
+            } catch (error) {
+                resolve(null);
             }
 
         });
