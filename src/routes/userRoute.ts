@@ -1,7 +1,6 @@
 // dependencies
 import {Router} from 'express';
-import { SignUp } from '../controllers/user';
-import UserUpdate from '../controllers/user/UserUpdate';
+import { SignUp, UserUpdate } from '../controllers/user';
 import { authenticateMiddleware, signUpMiddleware } from '../middleware';
 
 const userRoute: Router = Router();
