@@ -68,10 +68,22 @@ class ClassService {
     public static getClassName(classCode: string): Promise<any> {
         return new Promise(async (resolve) => {
             try {
-                const val = await Class.findOne({code: classCode});
+                const val = await this.findByCode(classCode);
                 resolve(val.className);
             } catch (error) {
                 resolve(null);
+            }
+
+        });
+    }
+
+    public static findByCode(classCode: string): Promise<any> {
+        return new Promise(async (resolve) => {
+            try {
+                const val = await Class.findOne({code: classCode});
+                resolve(val);
+            } catch (error) {
+                resolve(error);
             }
 
         });
