@@ -35,6 +35,8 @@ class ClassService {
 
     public static async joinClass(data: IJoinClass): Promise<any> {
         return new Promise(async (resolve, reject) => {
+            const conn = mongoose.connection;
+            const session = await conn.startSession();
             try {
                 const id = data.uid;
                 const classCode = data.classCode;
@@ -42,12 +44,24 @@ class ClassService {
                 if(user.joinedClasses.includes(classCode)) {
                     reject({ _message: ALREADY_JOINED_CLASS, httpCode: StatusCodes.CONFLICT });
                 } else {
+                    session.startTransaction();
+
                     await User.updateOne({_id: id}, { $push: { joinedClasses: [classCode] } });
+                    await Class.findOneAndUpdate(
+                            {code: classCode}, 
+                            { $inc: { numOfStudents: 1 } }, 
+                            {new: true }
+                       );
+
+                    await session.commitTransaction();
+                    session.endSession();
                     const className = await this.getClassName(classCode);
                     resolve({ className, classCode: data.classCode });
                 }
 
             } catch (error) {
+                await session.abortTransaction();
+                session.endSession();
                 reject(error);
             }
         });
