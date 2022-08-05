@@ -2,6 +2,7 @@ import { IIsJoined, ISignout, IUpdate } from './../../interfaces/IAuth';
 import { ISignup, ISignin } from './../../interfaces';
 import User from '../../models/User';
 import Dump from '../../models/Token';
+import ClassService from '../_Class';
 
 class UserService {
     public static signUp (data: ISignup): Promise<any> {
@@ -63,6 +64,22 @@ class UserService {
         } catch (error) {
             return false;
         }
+    }
+
+    public static userClassDetails(id: string): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await this.findById(id);
+                const classes: any[] = await Promise.all(
+                    user.joinedClasses.map(async (code: string) => await ClassService.findByCode(code))
+                );
+                resolve(classes)
+            } catch (error) {
+                console.log(error)
+                reject(error);
+            }
+        });
+        
     }
 }
 
