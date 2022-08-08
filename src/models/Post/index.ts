@@ -23,8 +23,7 @@ const postSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: true
-    },
-    commentIds: [String]
+    }
 }, {
     timestamps: true
 });

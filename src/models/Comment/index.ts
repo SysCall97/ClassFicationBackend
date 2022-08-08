@@ -4,11 +4,6 @@ import mongoose from "mongoose";
 mongoose.Promise = global.Promise;
 
 const commentSchema = new mongoose.Schema({
-    classCode: {
-        type: String,
-        trim: true,
-        required: true
-    },
     postId: {
         type: mongoose.Schema.Types.ObjectId,
         trim: true,

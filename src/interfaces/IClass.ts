@@ -17,7 +17,9 @@ export interface IJoinClass {
 export interface IGetPost {
     classCode: string,
     uid: string,
-    role: number
+    role: number,
+    page: number,
+    limit: number
 }
 
 export interface ICreateComment {

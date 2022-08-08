@@ -7,7 +7,7 @@ class PostService {
     public static async createPost(data: ICreatePost): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                const _data = await Post.create({classCode: data.classCode, post: data.post, uid: data.uid, commentIds: []});
+                const _data = await Post.create({classCode: data.classCode, post: data.post, uid: data.uid});
                 const user = await User.findById(data.uid).select('name');
                 const date = new Date(_data.updatedAt);
                     const dateString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
@@ -40,8 +40,10 @@ class PostService {
         return new Promise(async (resolve, reject) => {
             try {
                 let posts;
-                if(data.role === 2) posts = await Post.find({classCode: data.classCode, active: true}).sort({ createdAt : -1});
-                else posts = await Post.find({classCode: data.classCode, uid: data.uid, active: true}).sort({ createdAt : -1});
+                const page = data.page, limit = data.limit;
+                const skip = page * limit;
+                if(data.role === 2) posts = await Post.find({classCode: data.classCode, active: true}).sort({ createdAt : -1}).skip(skip).limit(limit);
+                else posts = await Post.find({classCode: data.classCode, uid: data.uid, active: true}).sort({ createdAt : -1}).skip(skip).limit(limit);
 
                 let _posts: any[] = await Promise.all(posts.map(async post => {
                     const user = await User.findById(post.uid).select('name');
@@ -52,8 +54,12 @@ class PostService {
                     const obj = {uid: post.uid, userName: user?.name, _id: post._id, post: post.post, date: dateString};
                     return obj;
                 }));
-                
-                resolve(_posts);
+                const totalGetLength = skip + _posts.length;
+                let totalLength;
+                if(data.role === 2) totalLength = await Post.find({classCode: data.classCode, active: true}).count();
+                else totalLength = await Post.find({classCode: data.classCode, uid: data.uid, active: true}).count();
+
+                resolve({_posts, hasMore: totalGetLength < totalLength});
             } catch (error) {
                 reject(error);
             }
