@@ -18,7 +18,6 @@ class PostService {
                     post: _data.post,
                     date: dateString
                 });
-                // resolve({...data, comments: []});
             } catch (error) {
                 reject(error);
             }
