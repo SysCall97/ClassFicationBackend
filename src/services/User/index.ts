@@ -3,6 +3,8 @@ import { ISignup, ISignin } from './../../interfaces';
 import User from '../../models/User';
 import Dump from '../../models/Token';
 import ClassService from '../_Class';
+import TeacherClass from '../../models/TeacherClass/TeacherClass';
+import StudentClass from '../../models/StudentClass/StudentClass';
 
 class UserService {
     public static signUp (data: ISignup): Promise<any> {
@@ -58,24 +60,33 @@ class UserService {
 
     public static async isJoinedClass(data: IIsJoined): Promise<boolean> {
         try {
-            const user = await this.findById(data.uid);
-            if(!user) return false;
-            return user.joinedClasses.includes(data.classCode)
+            let check;
+            const {role, uid, classCode } = data;
+            if(role === 1) {
+                check = await TeacherClass.find({uid: uid, classCode: classCode}).count();
+            } else {
+                check = await StudentClass.find({uid: uid, classCode: classCode}).count();
+            }
+            return !!check;
         } catch (error) {
             return false;
         }
     }
 
-    public static userClassDetails(id: string): Promise<any> {
+    public static userClassDetails(id: string, role: number): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                const user = await this.findById(id);
+                let userClass: any[];
+                if(role === 1) {
+                    userClass = await TeacherClass.find({uid: id});
+                } else {
+                    userClass = await StudentClass.find({uid: id});
+                }
                 const classes: any[] = await Promise.all(
-                    user.joinedClasses.map(async (code: string) => await ClassService.findByCode(code))
+                    userClass.map(async (_userClass: {classCode: string}) => await ClassService.findByCode(_userClass.classCode))
                 );
-                resolve(classes)
+                resolve(classes);
             } catch (error) {
-                console.log(error)
                 reject(error);
             }
         });

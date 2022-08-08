@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    joinedClasses: [String]
 }, {
     timestamps: true
 });

@@ -11,7 +11,8 @@ class CreateClass {
             }
             const data = await ClassService.createClass({
                 className: req.body.className,
-                uid: req.body.uid
+                uid: req.body.uid,
+                role: req.body.role
             });
             return res.status(StatusCodes.CREATED).json({ classCode: data });
         } catch (error) {

@@ -8,15 +8,18 @@ class UserJoinedClassDetails {
         try {
             const body = req.body;
             const uid = body.uid;
+            const role = body.role;
 
-            const data: any = await UserService.userClassDetails(uid);
+            const data: any = await UserService.userClassDetails(uid, role);
             const response = [];
             for (const _class of data) {
                 if(!_class) continue;
                 response.push({
                     className: _class.className,
                     classCode: _class.code,
-                    numOfStudents: _class.numOfStudents
+                    numOfStudents: _class.numOfStudents,
+                    numOfTeachers: _class.numOfTeachers,
+                    numOfPosts: _class.numOfPosts
                 })
             }
             return res.status(StatusCodes.OK).json(response);

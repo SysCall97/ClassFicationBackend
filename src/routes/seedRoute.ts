@@ -20,7 +20,8 @@ seedRoute.post('/', async (req: Request, res: Response) => {
     _class.forEach(async cls => {
         const cData: ICreateClass = {
             className: cls.className,
-            uid: uData[1]._id
+            uid: uData[1]._id,
+            role: uData[1].role
         };
         const classCode = await ClassService.createClass(cData);
         await ClassService.joinClass({classCode: classCode, uid: uData[0]._id, role: uData[0].role});

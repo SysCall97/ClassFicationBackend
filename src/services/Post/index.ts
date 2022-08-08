@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import { ICheckEntityOwner, ICreatePost, IEditEntity, IGetPost } from "../../interfaces";
+import Class from "../../models/Class";
 import Comment from "../../models/Comment";
 import Post from "../../models/Post";
 import User from "../../models/User";
@@ -6,11 +8,21 @@ import User from "../../models/User";
 class PostService {
     public static async createPost(data: ICreatePost): Promise<any> {
         return new Promise(async (resolve, reject) => {
+            const conn = mongoose.connection;
+            const session = await conn.startSession();
             try {
+                session.startTransaction();
                 const _data = await Post.create({classCode: data.classCode, post: data.post, uid: data.uid});
+                await Class.findOneAndUpdate(
+                    {code: data.classCode}, 
+                    { $inc: { numOfPosts: 1 } }, 
+                    {new: true }
+                );
                 const user = await User.findById(data.uid).select('name');
+                await session.commitTransaction();
+                session.endSession();
                 const date = new Date(_data.updatedAt);
-                    const dateString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+                const dateString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
                 resolve({
                     uid: _data.uid,
                     userName: user?.name,
@@ -19,6 +31,8 @@ class PostService {
                     date: dateString
                 });
             } catch (error) {
+                await session.abortTransaction();
+                session.endSession();
                 reject(error);
             }
         });

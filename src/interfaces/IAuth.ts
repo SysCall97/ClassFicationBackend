@@ -35,6 +35,7 @@ export interface IAuthValidation {
 }
 
 export interface IIsJoined { 
+    role: number,
     uid: string, 
     classCode: string
 }

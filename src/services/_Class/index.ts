@@ -4,6 +4,8 @@ import { getRandomString } from "../../helpers/randomStringGenerator";
 import { ICreateClass, IJoinClass } from "../../interfaces";
 import { ALREADY_JOINED_CLASS } from "../../messages";
 import Class from "../../models/Class";
+import StudentClass from '../../models/StudentClass/StudentClass';
+import TeacherClass from '../../models/TeacherClass/TeacherClass';
 import User from "../../models/User";
 
 
@@ -18,8 +20,15 @@ class ClassService {
                 const id = data.uid
                 session.startTransaction();
 
-                await Class.create({className: data.className, uid: data.uid, code: classCode});
-                await User.updateOne({_id: id}, { $push: { joinedClasses: [classCode] } });
+                await Class.create({className: data.className, uid: id, code: classCode});
+                if(data.role === 1) await TeacherClass.create({
+                    uid: id,
+                    classCode: classCode
+                });
+                else await StudentClass.create({
+                    uid: id,
+                    classCode: classCode
+                });
                 await session.commitTransaction();
                 session.endSession();
 
@@ -40,20 +49,34 @@ class ClassService {
             try {
                 const id = data.uid;
                 const classCode = data.classCode;
-                const user = await User.findById(id).select('joinedClasses');
-                if(user.joinedClasses.includes(classCode)) {
+                const role = data.role;
+                let check;
+                
+                if(role === 1) {
+                    check = await TeacherClass.find({classCode: classCode, uid: id}).count();
+                } else {
+                    check = await StudentClass.find({classCode: classCode, uid: id}).count();
+                }
+                if(check !== 0) {
                     reject({ _message: ALREADY_JOINED_CLASS, httpCode: StatusCodes.CONFLICT });
                 } else {
                     session.startTransaction();
 
-                    await User.updateOne({_id: id}, { $push: { joinedClasses: [classCode] } });
-                    if(data.role === 2) {
+                    if(role === 2) {
+                        await StudentClass.create({
+                            uid: id,
+                            classCode: classCode
+                        });
                         await Class.findOneAndUpdate(
                                 {code: classCode}, 
                                 { $inc: { numOfStudents: 1 } }, 
                                 {new: true }
                         );
                     } else  {
+                        await TeacherClass.create({
+                            uid: id,
+                            classCode: classCode
+                        });
                         await Class.findOneAndUpdate(
                             {code: classCode}, 
                             { $inc: { numOfTeachers: 1 } }, 

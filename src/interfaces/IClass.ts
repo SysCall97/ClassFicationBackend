@@ -1,6 +1,7 @@
 export interface ICreateClass {
     className: string,
-    uid: string
+    uid: string,
+    role: number
 };
 
 export interface ICreatePost {
