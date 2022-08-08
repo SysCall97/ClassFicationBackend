@@ -12,6 +12,7 @@ class JoinClass {
             
             const data = await ClassService.joinClass({
                 classCode: req.params.class_code,
+                role: req.body.role,
                 uid: req.body.uid
             });
             return res.status(StatusCodes.CREATED).json({ classCode: data.classCode, className: data.className });

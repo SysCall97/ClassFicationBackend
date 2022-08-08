@@ -11,6 +11,7 @@ export interface ICreatePost {
 
 export interface IJoinClass {
     classCode: string,
+    role: number,
     uid: string
 }
 

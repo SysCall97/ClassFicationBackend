@@ -21,8 +21,16 @@ const classSchema = new mongoose.Schema({
         required: true
     },
     numOfStudents: {
-        type:Number,
-        default:1
+        type: Number,
+        default: 1
+    },
+    numOfTeachers: {
+        type: Number,
+        default: 0
+    },
+    numOfPosts: {
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true

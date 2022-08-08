@@ -23,8 +23,8 @@ seedRoute.post('/', async (req: Request, res: Response) => {
             uid: uData[1]._id
         };
         const classCode = await ClassService.createClass(cData);
-        await ClassService.joinClass({classCode: classCode, uid: uData[0]._id});
-        await ClassService.joinClass({classCode: classCode, uid: uData[2]._id});
+        await ClassService.joinClass({classCode: classCode, uid: uData[0]._id, role: uData[0].role});
+        await ClassService.joinClass({classCode: classCode, uid: uData[2]._id, role: uData[0].role});
         const p1 = await PostService.createPost({
             classCode,
             uid: uData[0]._id,

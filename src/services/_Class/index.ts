@@ -47,11 +47,20 @@ class ClassService {
                     session.startTransaction();
 
                     await User.updateOne({_id: id}, { $push: { joinedClasses: [classCode] } });
-                    await Class.findOneAndUpdate(
+                    if(data.role === 2) {
+                        await Class.findOneAndUpdate(
+                                {code: classCode}, 
+                                { $inc: { numOfStudents: 1 } }, 
+                                {new: true }
+                        );
+                    } else  {
+                        await Class.findOneAndUpdate(
                             {code: classCode}, 
-                            { $inc: { numOfStudents: 1 } }, 
+                            { $inc: { numOfTeachers: 1 } }, 
                             {new: true }
-                       );
+                        );
+                    }
+                            
 
                     await session.commitTransaction();
                     session.endSession();
