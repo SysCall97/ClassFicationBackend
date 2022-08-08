@@ -8,7 +8,16 @@ class PostService {
         return new Promise(async (resolve, reject) => {
             try {
                 const _data = await Post.create({classCode: data.classCode, post: data.post, uid: data.uid, commentIds: []});
-                resolve(_data);
+                const user = await User.findById(data.uid).select('name');
+                const date = new Date(_data.updatedAt);
+                    const dateString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+                resolve({
+                    uid: _data.uid,
+                    userName: user?.name,
+                    _id: _data._id,
+                    post: _data.post,
+                    date: dateString
+                });
                 // resolve({...data, comments: []});
             } catch (error) {
                 reject(error);
@@ -37,17 +46,10 @@ class PostService {
                 let _posts: any[] = await Promise.all(posts.map(async post => {
                     const user = await User.findById(post.uid).select('name');
                     post.userName = user?.name;
-                    const commentIds = post.commentIds;
-                    let comments = await Promise.all(commentIds.map(async (commentId: any) => {
-                        const comment = await Comment.findById(commentId);
-                        if(comment.active === true) {
-                            const user = await User.findById(comment.uid).select('name');
-                            return { commentId: comment._id, comment: comment.comment, userName: user.name };
-                        }
-                    }
-                    ));
-                    comments = comments.filter(Boolean)
-                    const obj = {uid: post.uid, userName: user?.name, _id: post._id, classCode: post.classCode, post: post.post, comments};
+                    const date = new Date(post.updatedAt);
+                    const dateString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+                    
+                    const obj = {uid: post.uid, userName: user?.name, _id: post._id, post: post.post, date: dateString};
                     return obj;
                 }));
                 
