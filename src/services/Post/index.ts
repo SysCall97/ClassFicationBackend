@@ -62,7 +62,7 @@ class PostService {
                     const user = await User.findById(post.uid).select('name');
                     post.userName = user?.name;
                     const date = new Date(post.updatedAt);
-                    const dateString = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+                    const dateString = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
                     
                     const obj = {uid: post.uid, userName: user?.name, _id: post._id, post: post.post, date: dateString};
                     return obj;
