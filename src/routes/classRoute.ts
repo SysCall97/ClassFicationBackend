@@ -10,6 +10,7 @@ import DeletePost from '../controllers/_class/post/DeletePost';
 import EditPost from '../controllers/_class/post/EditPost';
 import GetPost from '../controllers/_class/post/GetPost';
 import GetStudents from '../controllers/_class/students/GetStudents';
+import GetTeachers from '../controllers/_class/teachers/GetTeachers';
 import { 
     checkClassExistsMiddleware, 
     checkCommentOwnerMiddleware, 
@@ -35,5 +36,6 @@ classRoute.put('/:class_code/post/:post_id/comment/:comment_id', checkClassExist
 classRoute.delete('/:class_code/post/:post_id/comment/:comment_id', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, checkCommentOwnerMiddleware, checkCommentExistsMiddleware, DeleteComment.perform);
 
 classRoute.get('/:class_code/students', checkClassExistsMiddleware, checkJoinedClassMiddleware, GetStudents.perform);
+classRoute.get('/:class_code/teachers', checkClassExistsMiddleware, checkJoinedClassMiddleware, GetTeachers.perform);
 
 export default classRoute;

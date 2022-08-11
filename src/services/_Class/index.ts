@@ -144,7 +144,6 @@ class ClassService {
                 const _students = await StudentClass.find({classCode: classCode}).sort({ createdAt : -1}).skip(skip).limit(limit);
 
                 const __students: any[] = await Promise.all(_students.map(async student => {
-                    console.log(student);
                     const user = await User.findById(student.uid).select('name');
                     return user;
                 }));
@@ -154,6 +153,30 @@ class ClassService {
                 }
 
                 resolve(students);
+            } catch (error) {
+                reject(error);
+            }
+
+        });
+    }
+
+    public static getTeachers(data: IGetMember): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            const {page, limit, classCode} = data;
+            const skip = page * limit;
+            try {
+                const _teachers= await TeacherClass.find({classCode: classCode}).sort({ createdAt : -1}).skip(skip).limit(limit);
+
+                const __teachers: any[] = await Promise.all(_teachers.map(async teacher => {
+                    const user = await User.findById(teacher.uid).select('name');
+                    return user;
+                }));
+                const teachers: any[] = [];
+                for(let i = 0; i < __teachers.length; i++) {
+                    if(!!_teachers[i]) teachers.push(_teachers[i]);
+                }
+
+                resolve(teachers);
             } catch (error) {
                 reject(error);
             }
