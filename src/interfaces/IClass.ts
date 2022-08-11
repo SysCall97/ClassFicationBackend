@@ -39,3 +39,9 @@ export interface IEditEntity {
     id: string,
     details: string
 }
+
+export interface IGetMember {
+    classCode: string,
+    page: number,
+    limit: number
+}
