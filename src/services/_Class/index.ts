@@ -151,8 +151,10 @@ class ClassService {
                 for(let i = 0; i < __students.length; i++) {
                     if(!!__students[i]) students.push(__students[i]);
                 }
+                const totalLength = await StudentClass.find({classCode: classCode}).count();
+                const totalGetLength = skip + _students.length;
 
-                resolve(students);
+                resolve({students, hasMore: totalGetLength < totalLength});
             } catch (error) {
                 reject(error);
             }
@@ -173,10 +175,12 @@ class ClassService {
                 }));
                 const teachers: any[] = [];
                 for(let i = 0; i < __teachers.length; i++) {
-                    if(!!_teachers[i]) teachers.push(_teachers[i]);
+                    if(!!__teachers[i]) teachers.push(__teachers[i]);
                 }
+                const totalLength = await TeacherClass.find({classCode: classCode}).count();
+                const totalGetLength = skip + _teachers.length;
 
-                resolve(teachers);
+                resolve({teachers, hasMore: totalGetLength < totalLength});
             } catch (error) {
                 reject(error);
             }
