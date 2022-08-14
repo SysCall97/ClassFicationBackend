@@ -5,6 +5,7 @@ import JoinClass from '../controllers/_class/JoinClass';
 import CreateComment from '../controllers/_class/post/comment/CreateComment';
 import DeleteComment from '../controllers/_class/post/comment/DeleteComment';
 import EditComment from '../controllers/_class/post/comment/EditComment';
+import GetComment from '../controllers/_class/post/comment/GetComments';
 import CreatePost from '../controllers/_class/post/CreatePost';
 import DeletePost from '../controllers/_class/post/DeletePost';
 import EditPost from '../controllers/_class/post/EditPost';
@@ -32,6 +33,7 @@ classRoute.get('/:class_code/post', checkClassExistsMiddleware, checkJoinedClass
 classRoute.delete('/:class_code/post/:post_id', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, checkPostOwnerMiddleware, DeletePost.perform);
 
 classRoute.post('/:class_code/post/:post_id/comment', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, CreateComment.perform);
+classRoute.get('/:class_code/post/:post_id/comment', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, GetComment.perform);
 classRoute.put('/:class_code/post/:post_id/comment/:comment_id', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, checkCommentOwnerMiddleware, checkCommentExistsMiddleware, EditComment.perform);
 classRoute.delete('/:class_code/post/:post_id/comment/:comment_id', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkPostExistsMiddleware, checkCommentOwnerMiddleware, checkCommentExistsMiddleware, DeleteComment.perform);
 

@@ -1,7 +1,9 @@
+import { IGetComment } from './../../interfaces/IClass';
 import mongoose from "mongoose";
 import { ICheckEntityOwner, ICreateComment, IEditEntity } from "../../interfaces";
 import Comment from "../../models/Comment";
 import Post from "../../models/Post";
+import User from '../../models/User';
 
 class CommentService {
     public static createComment(data: ICreateComment): Promise<any> {
@@ -18,6 +20,38 @@ class CommentService {
             } catch (error) {
                 await session.abortTransaction();
                 session.endSession();
+                reject(error);
+            }
+        });
+    }
+
+    public static async editPost(data: IEditEntity): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const val = await Post.updateOne({_id: data.id}, { $set: { post: data.details }});
+                resolve({post: data.details});
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    public static async getComment(data: IGetComment): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const { postId, uid } = data;
+                const comments = await Comment.find({ postId: postId, active: true });
+                let _comments: any[] = await Promise.all(comments.map(async comment => {
+                    const user = await User.findById(comment.uid).select('name');
+                    comment.userName = user?.name;
+                    const date = new Date(comment.updatedAt);
+                    const dateString = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+                    
+                    const obj = {uid: comment.uid, userName: user?.name, _id: comment._id, comment: comment.comment, date: dateString};
+                    return obj;
+                }));
+                resolve({_comments});
+            } catch (error) {
                 reject(error);
             }
         });
