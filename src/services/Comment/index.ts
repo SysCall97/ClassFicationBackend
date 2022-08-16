@@ -16,7 +16,12 @@ class CommentService {
                 await Post.updateOne({_id: data.postId}, {$push: { commentIds: [_data._id] } });
                 await session.commitTransaction();
                 session.endSession();
-                resolve(_data);
+
+                const user = await User.findById(data.uid).select('name');
+                const date = new Date(_data.updatedAt);
+                const dateString = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+                const obj = {uid: _data.uid, userName: user?.name, _id: _data._id, comment: _data.comment, date: dateString};
+                resolve(obj);
             } catch (error) {
                 await session.abortTransaction();
                 session.endSession();
