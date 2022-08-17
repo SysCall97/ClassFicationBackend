@@ -1,3 +1,4 @@
+import { multerGetter } from './multer';
 import { signUpMiddleware } from './signUp';
 import { signInMiddleware } from './signIn'
 import { authenticateMiddleware } from './authenticate';
@@ -6,6 +7,8 @@ import { checkJoinedClassMiddleware } from './checkJoinedClass';
 import { checkPostExistsMiddleware } from './checkPostExist';
 import { checkPostOwnerMiddleware } from './checkPostOwner';
 import { checkCommentOwnerMiddleware } from './checkCommentOwner';
+import { filterOutStudent } from './filterOutStudent';
+import { filterOutTeacher } from './filterOutTeacher';
 export {
     signUpMiddleware, 
     signInMiddleware, 
@@ -14,5 +17,8 @@ export {
     checkJoinedClassMiddleware, 
     checkPostExistsMiddleware,
     checkPostOwnerMiddleware,
-    checkCommentOwnerMiddleware
+    checkCommentOwnerMiddleware,
+    filterOutStudent,
+    filterOutTeacher,
+    multerGetter
 }
