@@ -5,6 +5,7 @@ import Dump from '../../models/Token';
 import ClassService from '../_Class';
 import TeacherClass from '../../models/TeacherClass/TeacherClass';
 import StudentClass from '../../models/StudentClass/StudentClass';
+import { roles } from '../../helpers';
 
 class UserService {
     public static signUp (data: ISignup): Promise<any> {
@@ -62,7 +63,7 @@ class UserService {
         try {
             let check;
             const {role, uid, classCode } = data;
-            if(role === 1) {
+            if(role === roles.teacher) {
                 check = await TeacherClass.find({uid: uid, classCode: classCode}).count();
             } else {
                 check = await StudentClass.find({uid: uid, classCode: classCode}).count();
@@ -77,7 +78,7 @@ class UserService {
         return new Promise(async (resolve, reject) => {
             try {
                 let userClass: any[];
-                if(role === 1) {
+                if(role === roles.teacher) {
                     userClass = await TeacherClass.find({uid: id});
                 } else {
                     userClass = await StudentClass.find({uid: id});

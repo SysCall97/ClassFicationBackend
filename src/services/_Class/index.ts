@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import mongoose from "mongoose";
+import { roles } from '../../helpers';
 import { getRandomString } from "../../helpers/randomStringGenerator";
 import { ICreateClass, IJoinClass } from "../../interfaces";
 import { IGetMember } from '../../interfaces/IClass';
@@ -22,7 +23,7 @@ class ClassService {
                 session.startTransaction();
 
                 await Class.create({className: data.className, uid: id, code: classCode});
-                if(data.role === 1) await TeacherClass.create({
+                if(data.role === roles.teacher) await TeacherClass.create({
                     uid: id,
                     classCode: classCode
                 });
@@ -53,7 +54,7 @@ class ClassService {
                 const role = data.role;
                 let check;
                 
-                if(role === 1) {
+                if(role === roles.teacher) {
                     check = await TeacherClass.find({classCode: classCode, uid: id}).count();
                 } else {
                     check = await StudentClass.find({classCode: classCode, uid: id}).count();
@@ -63,7 +64,7 @@ class ClassService {
                 } else {
                     session.startTransaction();
 
-                    if(role === 2) {
+                    if(role === roles.student) {
                         await StudentClass.create({
                             uid: id,
                             classCode: classCode

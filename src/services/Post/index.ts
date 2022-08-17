@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { roles } from "../../helpers";
 import { ICheckEntityOwner, ICreatePost, IEditEntity, IGetPost } from "../../interfaces";
 import Class from "../../models/Class";
 import Comment from "../../models/Comment";
@@ -55,7 +56,7 @@ class PostService {
                 let posts;
                 const page = data.page, limit = data.limit;
                 const skip = page * limit;
-                if(data.role === 2) posts = await Post.find({classCode: data.classCode, active: true}).sort({ createdAt : -1}).skip(skip).limit(limit);
+                if(data.role === roles.student) posts = await Post.find({classCode: data.classCode, active: true}).sort({ createdAt : -1}).skip(skip).limit(limit);
                 else posts = await Post.find({classCode: data.classCode, uid: data.uid, active: true}).sort({ createdAt : -1}).skip(skip).limit(limit);
 
                 let _posts: any[] = await Promise.all(posts.map(async post => {
@@ -69,7 +70,7 @@ class PostService {
                 }));
                 const totalGetLength = skip + _posts.length;
                 let totalLength;
-                if(data.role === 2) totalLength = await Post.find({classCode: data.classCode, active: true}).count();
+                if(data.role === roles.student) totalLength = await Post.find({classCode: data.classCode, active: true}).count();
                 else totalLength = await Post.find({classCode: data.classCode, uid: data.uid, active: true}).count();
 
                 resolve({_posts, hasMore: totalGetLength < totalLength});
