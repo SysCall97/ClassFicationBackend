@@ -32,3 +32,6 @@ export const UPDATE_SUCCESSFULL: string = "Updated user info successfully";
 export const UPDATE_ERROR: string = "User info update failed";
 export const PROVIDE_UPDATE_USER_DATA: string = "Provide correct information to update your info";
 export const TOKEN_STILL_ALIVE: string = "Token Still alive";
+export const STUDENT_FORBIDDEN_ACTION: string = "Student is not allowed for this action";
+export const TEACHER_FORBIDDEN_ACTION: string = "Teacher is allowed for this action";
+export const ASSIGNED_SUCCESSFULLY: string = "assigned successfully";
