@@ -50,3 +50,10 @@ export interface IGetMember {
     page: number,
     limit: number
 }
+
+export interface ISaveAssignment {
+    classCode: string,
+    assignmentCode: string
+    lastDate: Date,
+    uid: string
+}
