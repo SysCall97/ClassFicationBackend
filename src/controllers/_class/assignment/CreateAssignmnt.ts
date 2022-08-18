@@ -9,7 +9,6 @@ class CreateAssignment {
     public static async perform(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
         try {
             const classCode = req.params.class_code;
-            console.log(req.body.classCode)
             const payload: ISaveAssignment = {
                 classCode,
                 uid: req.body.uid,
