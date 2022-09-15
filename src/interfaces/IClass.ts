@@ -53,7 +53,8 @@ export interface IGetMember {
 
 export interface ISaveAssignment {
     classCode: string,
-    assignmentCode: string
+    assignmentCode: string,
+    startDate: Date,
     lastDate: Date,
     uid: string
 }

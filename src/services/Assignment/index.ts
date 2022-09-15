@@ -6,8 +6,8 @@ class AssignmentService {
     public static saveAssignment(data: ISaveAssignment): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                const { uid, classCode, lastDate, assignmentCode } = data;
-                await Assignment.create({uid, classCode, lastDate, assignmentCode});
+                const { uid, classCode, startDate, lastDate, assignmentCode } = data;
+                await Assignment.create({uid, classCode, startDate, lastDate, assignmentCode});
                 resolve("SUCCESS");
             } catch (error: any) {
                 reject(error);

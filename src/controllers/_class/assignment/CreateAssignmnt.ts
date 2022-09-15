@@ -12,6 +12,7 @@ class CreateAssignment {
             const payload: ISaveAssignment = {
                 classCode,
                 uid: req.body.uid,
+                startDate: req.body.startDate,
                 lastDate: req.body.lastDate,
                 assignmentCode: req.body.assignmentCode
             }

@@ -20,6 +20,10 @@ const assignmentSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    startDate: {
+        type: Date,
+        required: true
+    },
     lastDate: {
         type: Date,
         required: true
