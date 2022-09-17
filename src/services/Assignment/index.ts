@@ -6,8 +6,8 @@ class AssignmentService {
     public static saveAssignment(data: ISaveAssignment): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                const { uid, classCode, startDate, lastDate, assignmentCode } = data;
-                await Assignment.create({uid, classCode, startDate, lastDate, assignmentCode});
+                const { uid, classCode, startDate, lastDate, assignmentCode, title } = data;
+                await Assignment.create({uid, title, classCode, startDate, lastDate, assignmentCode});
                 resolve("SUCCESS");
             } catch (error: any) {
                 reject(error);
@@ -29,7 +29,7 @@ class AssignmentService {
             else if(status === 'past') query = Assignment.find({classCode: classCode, uid: uid, lastDate: { $lt: date }});
             else if(status === 'future') query = Assignment.find({classCode: classCode, uid: uid, startDate: { $gt: date }});
 
-            const assignment = await query.select('classCode assignmentCode startDate lastDate').skip(skip).limit(limit);
+            const assignment = await query.select('title classCode assignmentCode startDate lastDate').skip(skip).limit(limit);
             return assignment;
         } catch (error: any) {
             return error;
@@ -50,7 +50,7 @@ class AssignmentService {
             else if(status === 'past') query = Assignment.find({classCode: classCode, lastDate: { $lt: date }});
             else if(status === 'future') query = Assignment.find({classCode: classCode, startDate: { $gt: date }});
 
-            const assignment = await query.select('classCode assignmentCode startDate lastDate').skip(skip).limit(limit);
+            const assignment = await query.select('title classCode assignmentCode startDate lastDate').skip(skip).limit(limit);
             return assignment;
         } catch (error: any) {
             return error;

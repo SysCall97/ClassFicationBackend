@@ -53,6 +53,7 @@ export interface IGetMember extends IPagination {
 }
 
 export interface ISaveAssignment {
+    title: string,
     classCode: string,
     assignmentCode: string,
     startDate: Date,

@@ -4,6 +4,11 @@ import mongoose from "mongoose";
 mongoose.Promise = global.Promise;
 
 const assignmentSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        trim: true,
+        required: true
+    },
     classCode: {
         type: String,
         trim: true,
