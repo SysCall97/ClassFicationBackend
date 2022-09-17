@@ -1,5 +1,5 @@
 import { IGetAssignment } from './../../../interfaces/IClass';
-import { ASSIGNED_SUCCESSFULLY, TRY_AGAIN_LATER } from './../../../messages/index';
+import { STUDENT_FORBIDDEN_ACTION } from './../../../messages/index';
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from "express";
 import AssignmentService from '../../../services/Assignment';
@@ -36,6 +36,8 @@ class GetAssignment {
             const status: string = String(req.query.status) ?? 'present';
             const page: number = Number(req.query.page ?? 0);
             let limit: number = Number(req.query.limit ?? 10);
+
+            if(status == 'future') return res.status(StatusCodes.BAD_REQUEST).json({ message: STUDENT_FORBIDDEN_ACTION });
 
             const payload: IGetAssignment = {
                 classCode,
