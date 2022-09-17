@@ -1,6 +1,6 @@
-import path from 'path';
+import { roles } from './../../helpers/types';
 import Assignment from '../../models/Assignment';
-import { ISaveAssignment } from './../../interfaces/IClass';
+import { ISaveAssignment, IGetAssignment } from './../../interfaces/IClass';
 
 class AssignmentService {
     public static saveAssignment(data: ISaveAssignment): Promise<any> {
@@ -13,6 +13,48 @@ class AssignmentService {
                 reject(error);
             }
         });
+    }
+
+    /**
+     * getTeacherAssignment
+     */
+    public static async getTeacherAssignment(data: IGetAssignment): Promise<any> {
+        try {
+            const { uid, classCode, status, page, limit } = data;
+            const skip: number = page * limit;
+            const date = Date.now();
+            let query = Assignment.find({classCode: classCode, uid: uid, startDate: { $lte: date }, lastDate: { $gt: date }});
+
+            if(status === 'present') query = Assignment.find({classCode: classCode, uid: uid, startDate: { $lte: date }, lastDate: { $gt: date }});
+            else if(status === 'past') query = Assignment.find({classCode: classCode, uid: uid, lastDate: { $lt: date }});
+            else if(status === 'future') query = Assignment.find({classCode: classCode, uid: uid, startDate: { $gt: date }});
+
+            const assignment = await query.select('classCode assignmentCode startDate lastDate').skip(skip).limit(limit);
+            return assignment;
+        } catch (error: any) {
+            return error;
+        }
+}
+
+    /**
+     * getStudentAssignment
+     */
+     public static async getStudentAssignment(data: IGetAssignment): Promise<any> {
+        try {
+            const { classCode, status, page, limit } = data;
+            const skip: number = page * limit;
+            const date = Date.now();
+            let query = Assignment.find({classCode: classCode, startDate: { $lte: date }, lastDate: { $gt: date }});
+
+            if(status === 'present') query = Assignment.find({classCode: classCode, startDate: { $lte: date }, lastDate: { $gt: date }});
+            else if(status === 'past') query = Assignment.find({classCode: classCode, lastDate: { $lt: date }});
+            else if(status === 'future') query = Assignment.find({classCode: classCode, startDate: { $gt: date }});
+
+            const assignment = await query.select('classCode assignmentCode startDate lastDate').skip(skip).limit(limit);
+            return assignment;
+        } catch (error: any) {
+            return error;
+        }
     }
 }
 
