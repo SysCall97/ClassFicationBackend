@@ -1,6 +1,7 @@
 // dependencies
 import {Router} from 'express';
 import CreateAssignment from '../controllers/_class/assignment/CreateAssignmnt';
+import GetAssignment from '../controllers/_class/assignment/GetAssignment';
 import CreateClass from '../controllers/_class/CreateClass';
 import JoinClass from '../controllers/_class/JoinClass';
 import CreateComment from '../controllers/_class/post/comment/CreateComment';
@@ -49,6 +50,8 @@ classRoute.get('/:class_code/teachers', checkClassExistsMiddleware, checkJoinedC
 // here we have to use authenticateMiddleware after multer 
 // though we're using authenticateMiddleware before any route here, but we're using it twice in this API
 // It's because multer is overriding the req.body attribute that's been set in the authenticateMiddleware
-classRoute.post('/:class_code/assignment', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, multerGetter(uploadType.assignment).single('file'), authenticateMiddleware, CreateAssignment.perform);
+classRoute.post('/:class_code/teachers/assignment', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, multerGetter(uploadType.assignment).single('file'), authenticateMiddleware, CreateAssignment.perform);
+classRoute.get('/:class_code/teachers/assignment', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.teacherPerform);
+classRoute.get('/:class_code/students/assignment', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.studentPerform);
 
 export default classRoute;
