@@ -1,3 +1,8 @@
+interface IPagination {
+    page: number,
+    limit: number
+};
+
 export interface ICreateClass {
     className: string,
     uid: string,
@@ -16,12 +21,10 @@ export interface IJoinClass {
     uid: string
 }
 
-export interface IGetPost {
+export interface IGetPost extends IPagination {
     classCode: string,
     uid: string,
     role: number,
-    page: number,
-    limit: number
 }
 
 export interface ICreateComment {
@@ -45,10 +48,8 @@ export interface IEditEntity {
     details: string
 }
 
-export interface IGetMember {
-    classCode: string,
-    page: number,
-    limit: number
+export interface IGetMember extends IPagination {
+    classCode: string
 }
 
 export interface ISaveAssignment {
@@ -57,4 +58,11 @@ export interface ISaveAssignment {
     startDate: Date,
     lastDate: Date,
     uid: string
+}
+
+export interface IGetAssignment extends IPagination {
+    classCode: string,
+    role: number,
+    status: string,
+    uid: string,
 }
