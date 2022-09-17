@@ -30,17 +30,6 @@ class CommentService {
         });
     }
 
-    public static async editPost(data: IEditEntity): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const val = await Post.updateOne({_id: data.id}, { $set: { post: data.details }});
-                resolve({post: data.details});
-            } catch (error) {
-                reject(error);
-            }
-        });
-    }
-
     public static async getComment(data: IGetComment): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
