@@ -20,10 +20,11 @@ const assignmentSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    uid: {
+    teacher: {
         type: mongoose.Schema.Types.ObjectId,
         trim: true,
-        required: true
+        required: true,
+        ref: 'user'
     },
     startDate: {
         type: Date,

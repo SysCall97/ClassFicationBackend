@@ -37,7 +37,7 @@ class GetAssignment {
             const page: number = Number(req.query.page ?? 0);
             let limit: number = Number(req.query.limit ?? 10);
 
-            if(status == 'future') return res.status(StatusCodes.BAD_REQUEST).json({ message: STUDENT_FORBIDDEN_ACTION });
+            // if(status == 'future') return res.status(StatusCodes.BAD_REQUEST).json({ message: STUDENT_FORBIDDEN_ACTION });
 
             const payload: IGetAssignment = {
                 classCode,
