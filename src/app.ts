@@ -5,7 +5,9 @@ import { IDb } from './interfaces';
 import cluster from 'cluster';
 import { cpus } from 'os';
 import { router } from './routes';
-import {createReadStream} from 'fs';
+
+import { authenticateMiddleware, checkJoinedClassMiddleware } from './middleware';
+import GetAssignment from './controllers/_class/assignment/GetAssignment';
 
 require('dotenv').config();
 
@@ -17,11 +19,7 @@ const startApp = () => {
     
     app.get('/', (req: Request, res: Response) => res.send('Everything is working fine'));
 
-    app.get('/api/v1/pdf', (req: Request, res: Response) => {
-        const stream = createReadStream(`${process.cwd()}/public/assignment/Assignment-oaat8BGeqv.pdf`);
-        stream.pipe(res);
-    });
-
+    app.get("/assignment/:map_id", GetAssignment.getAssignmentPdf);
     app.use("/api/v1", router);
     
     const port = process.env.PORT || 5000;

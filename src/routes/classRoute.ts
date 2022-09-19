@@ -53,5 +53,6 @@ classRoute.get('/:class_code/teachers', checkClassExistsMiddleware, checkJoinedC
 classRoute.post('/:class_code/teachers/assignment', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, multerGetter(uploadType.assignment).single('file'), authenticateMiddleware, CreateAssignment.perform);
 classRoute.get('/:class_code/teachers/assignment', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.teacherPerform);
 classRoute.get('/:class_code/students/assignment', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.studentPerform);
+classRoute.get('/:class_code/assignments/:id', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.getAssignmentLink);
 
 export default classRoute;

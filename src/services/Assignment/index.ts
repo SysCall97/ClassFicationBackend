@@ -1,6 +1,7 @@
-import { roles } from './../../helpers/types';
 import Assignment from '../../models/Assignment';
+import Map from '../../models/Map'
 import { ISaveAssignment, IGetAssignment } from './../../interfaces/IClass';
+import { TRY_AGAIN_LATER } from '../../messages';
 
 class AssignmentService {
     public static saveAssignment(data: ISaveAssignment): Promise<any> {
@@ -37,12 +38,12 @@ class AssignmentService {
         } catch (error: any) {
             return error;
         }
-}
+    }
 
     /**
      * getStudentAssignment
      */
-     public static async getStudentAssignment(data: IGetAssignment): Promise<any> {
+    public static async getStudentAssignment(data: IGetAssignment): Promise<any> {
         try {
             const { classCode, status, page, limit } = data;
             const skip: number = page * limit;
@@ -57,6 +58,43 @@ class AssignmentService {
                                     .skip(skip).limit(limit);
             return assignments;
         } catch (error: any) {
+            return error;
+        }
+    }
+
+    /**
+     * getAssignmentCodeById
+     */
+    public static async getAssignmentCodeById(id: string, classCode: string): Promise<any> {
+        try {
+            const assignmentCode = await Assignment.find({_id: id, classCode: classCode}).select('assignmentCode startDate -_id');
+            return assignmentCode[0];
+        } catch (error) {
+            return new Error(TRY_AGAIN_LATER);
+        }
+    }
+
+    /**
+     * getOneTimeId
+     */
+    public static async getOneTimeId(assignmentCode: string): Promise<any> {
+        try {
+            const data = await Map.create({value: assignmentCode});
+            return data._id;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    /**
+     * getAssignmentCodeFromMap
+     */
+    public static async getAssignmentCodeFromMap(mapId: string): Promise<any> {
+        try {
+            const data = await Map.findById(mapId);
+            await Map.findByIdAndDelete(mapId);
+            return data.value;
+        } catch (error) {
             return error;
         }
     }
