@@ -49,14 +49,13 @@ class AssignmentService {
             const date = Date.now();
             let query = Assignment.find({classCode: classCode, startDate: { $lte: date }, lastDate: { $gt: date }});
 
-            if(status === 'present') query = Assignment.find({classCode: classCode, startDate: { $lte: date }, lastDate: { $gt: date }});
-            else if(status === 'past') query = Assignment.find({classCode: classCode, lastDate: { $lt: date }});
-            else if(status === 'future') query = Assignment.find({classCode: classCode, startDate: { $gt: date }});
+            if(status === 'present') query = Assignment.find({classCode: classCode, startDate: { $lte: date }, lastDate: { $gt: date }}).select('title classCode startDate lastDate');
+            else if(status === 'past') query = Assignment.find({classCode: classCode, lastDate: { $lt: date }}).select('title classCode startDate lastDate');
+            else if(status === 'future') query = Assignment.find({classCode: classCode, startDate: { $gt: date }}).select('title classCode startDate lastDate -_id');
 
-            const assignment = await query.select('title classCode startDate lastDate')
-                                    .populate('teacher', 'name')
+            const assignments = await query.populate('teacher', 'name')
                                     .skip(skip).limit(limit);
-            return assignment;
+            return assignments;
         } catch (error: any) {
             return error;
         }
