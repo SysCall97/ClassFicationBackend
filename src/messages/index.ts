@@ -36,4 +36,6 @@ export const TOKEN_STILL_ALIVE: string = "Token Still alive";
 export const STUDENT_FORBIDDEN_ACTION: string = "Student is not allowed for this action";
 export const TEACHER_FORBIDDEN_ACTION: string = "Teacher is allowed for this action";
 export const ASSIGNED_SUCCESSFULLY: string = "Assigned successfully";
+export const SUBMITTED_SUCCESSFULLY: string = "Submitted successfully";
 export const NOT_ALLOWED_TO_SEE_ASSIGNMENT: string = "You're not allowed to see the pdf";
+export const NOT_ALLOWED_TO_SUBMIT_ASSIGNMENT: string = "Not allowed to submit the incoming assignment";

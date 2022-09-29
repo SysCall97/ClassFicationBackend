@@ -66,3 +66,14 @@ export interface IGetAssignment extends IPagination {
     status: string,
     uid?: string,
 }
+
+export interface ICheckAssignment {
+    classCode: string,
+    assignmentId: string
+}
+
+export interface ISaveSubmission {
+    assignmentCode: string,
+    submissionCode: string,
+    uid: string,
+}

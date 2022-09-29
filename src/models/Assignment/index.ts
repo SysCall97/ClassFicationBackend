@@ -26,6 +26,10 @@ const assignmentSchema = new mongoose.Schema({
         required: true,
         ref: 'user'
     },
+    submissions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'submission'
+    }],
     startDate: {
         type: Date,
         required: true

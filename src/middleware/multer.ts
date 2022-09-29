@@ -14,7 +14,8 @@ export const multerGetter = (type = uploadType.assignment) => {
             const fileExtension = path.extname(file.originalname);
             const assignmentCode = getRandomString(10);
             const assignmentname = `${type}-${assignmentCode}${fileExtension}`;
-            req.body.assignmentCode = assignmentCode;
+            if(type === uploadType.assignment) req.body.assignmentCode = assignmentCode;
+            else if(type === uploadType.submission) req.body.submissionCode = assignmentCode;
             cb(null, assignmentname);
         }
     });

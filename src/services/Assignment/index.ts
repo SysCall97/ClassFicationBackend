@@ -1,6 +1,6 @@
 import Assignment from '../../models/Assignment';
 import Map from '../../models/Map'
-import { ISaveAssignment, IGetAssignment } from './../../interfaces/IClass';
+import { ISaveAssignment, IGetAssignment, ICheckAssignment } from './../../interfaces/IClass';
 import { TRY_AGAIN_LATER } from '../../messages';
 
 class AssignmentService {
@@ -92,11 +92,22 @@ class AssignmentService {
     public static async getAssignmentCodeFromMap(mapId: string): Promise<any> {
         try {
             const data = await Map.findById(mapId);
-            await Map.findByIdAndDelete(mapId);
-            return data.value;
+            if(!!data) {
+                await Map.findByIdAndDelete(mapId);
+                return data.value;
+            }
         } catch (error) {
             return error;
         }
+    }
+
+    /**
+     * isAssignmentExists
+     */
+    public static async isAssignmentExists(payload: ICheckAssignment): Promise<boolean> {
+        const { classCode, assignmentId } = payload;
+        const count = await Assignment.find({ classCode: classCode, _id: assignmentId}).count();
+        return count > 0;
     }
 }
 

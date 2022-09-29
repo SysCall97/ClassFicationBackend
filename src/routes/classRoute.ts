@@ -2,6 +2,7 @@
 import {Router} from 'express';
 import CreateAssignment from '../controllers/_class/assignment/CreateAssignmnt';
 import GetAssignment from '../controllers/_class/assignment/GetAssignment';
+import CreateSubmission from '../controllers/_class/assignment/submission/CreateSubmission';
 import CreateClass from '../controllers/_class/CreateClass';
 import JoinClass from '../controllers/_class/JoinClass';
 import CreateComment from '../controllers/_class/post/comment/CreateComment';
@@ -26,6 +27,7 @@ import {
     multerGetter,
     authenticateMiddleware
 } from '../middleware';
+import { checkAssignmentExistMiddleware } from '../middleware/checkAssignmentExist';
 import { checkCommentExistsMiddleware } from '../middleware/checkCommentExist';
 
 const classRoute: Router = Router();
@@ -53,6 +55,8 @@ classRoute.get('/:class_code/teachers', checkClassExistsMiddleware, checkJoinedC
 classRoute.post('/:class_code/teachers/assignment', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, multerGetter(uploadType.assignment).single('file'), authenticateMiddleware, CreateAssignment.perform);
 classRoute.get('/:class_code/teachers/assignment', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.teacherPerform);
 classRoute.get('/:class_code/students/assignment', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.studentPerform);
-classRoute.get('/:class_code/assignments/:id', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.getAssignmentLink);
+classRoute.get('/:class_code/assignments/:id', checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.getAssignmentLink);
+
+classRoute.post('/:class_code/students/assignment/:assignment_id/submission', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, checkAssignmentExistMiddleware, multerGetter(uploadType.submission).single('file'), authenticateMiddleware, CreateSubmission.perform);
 
 export default classRoute;
