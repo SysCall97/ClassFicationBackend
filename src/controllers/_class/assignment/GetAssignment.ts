@@ -11,7 +11,6 @@ class GetAssignment {
         try {
             const classCode: string = req.params.class_code;
             const status: string = String(req.query.status) ?? 'present';
-            const role: number = Number(req.body.role);
             const uid: string = req.body.uid;
             const page: number = Number(req.query.page ?? 0);
             let limit: number = Number(req.query.limit ?? 10);
@@ -36,6 +35,7 @@ class GetAssignment {
         try {
             const classCode: string = req.params.class_code;
             const status: string = String(req.query.status) ?? 'present';
+            const uid: string = req.body.uid;
             const page: number = Number(req.query.page ?? 0);
             let limit: number = Number(req.query.limit ?? 10);
 
@@ -44,6 +44,7 @@ class GetAssignment {
             const payload: IGetAssignment = {
                 classCode,
                 status,
+                uid,
                 page,
                 limit
             }

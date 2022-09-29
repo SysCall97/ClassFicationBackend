@@ -45,7 +45,7 @@ class AssignmentService {
      */
     public static async getStudentAssignment(data: IGetAssignment): Promise<any> {
         try {
-            const { classCode, status, page, limit } = data;
+            const { classCode, uid, status, page, limit } = data;
             const skip: number = page * limit;
             const date = Date.now();
             let query = Assignment.find({classCode: classCode, startDate: { $lte: date }, lastDate: { $gt: date }});
@@ -54,8 +54,13 @@ class AssignmentService {
             else if(status === 'past') query = Assignment.find({classCode: classCode, lastDate: { $lt: date }}).select('title classCode startDate lastDate');
             else if(status === 'future') query = Assignment.find({classCode: classCode, startDate: { $gt: date }}).select('title classCode startDate lastDate -_id');
 
-            const assignments = await query.populate('teacher', 'name')
+            const _assignments = await query.populate('teacher', 'name').populate('submissions')
                                     .skip(skip).limit(limit);
+
+            const assignments = _assignments.map(assignment => {
+                assignment.submissions = assignment.submissions.filter((submission: { student: string | undefined }) => {return submission.student == uid});
+                return assignment;
+            });
             return assignments;
         } catch (error: any) {
             return error;

@@ -64,7 +64,7 @@ export interface ISaveAssignment {
 export interface IGetAssignment extends IPagination {
     classCode: string,
     status: string,
-    uid?: string,
+    uid: string,
 }
 
 export interface ICheckAssignment {
