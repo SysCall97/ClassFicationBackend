@@ -3,6 +3,8 @@ import {Router} from 'express';
 import CreateAssignment from '../controllers/_class/assignment/CreateAssignmnt';
 import GetAssignment from '../controllers/_class/assignment/GetAssignment';
 import CreateSubmission from '../controllers/_class/assignment/submission/CreateSubmission';
+import GetSubmission from '../controllers/_class/assignment/submission/GetSubmissions';
+import UpdateSubmission from '../controllers/_class/assignment/submission/UpdateSubmission';
 import CreateClass from '../controllers/_class/CreateClass';
 import JoinClass from '../controllers/_class/JoinClass';
 import CreateComment from '../controllers/_class/post/comment/CreateComment';
@@ -27,7 +29,9 @@ import {
     multerGetter,
     authenticateMiddleware
 } from '../middleware';
+import { checkAlreadySubmited } from '../middleware/checkAlreadySubmited';
 import { checkAssignmentExistMiddleware } from '../middleware/checkAssignmentExist';
+import { checkAssignmentOwner } from '../middleware/checkAssignmentOwner';
 import { checkCommentExistsMiddleware } from '../middleware/checkCommentExist';
 
 const classRoute: Router = Router();
@@ -57,6 +61,8 @@ classRoute.get('/:class_code/teachers/assignment', filterOutStudent, checkClassE
 classRoute.get('/:class_code/students/assignment', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.studentPerform);
 classRoute.get('/:class_code/assignments/:id', checkClassExistsMiddleware, checkJoinedClassMiddleware, GetAssignment.getAssignmentLink);
 
-classRoute.post('/:class_code/students/assignment/:assignment_id/submission', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, checkAssignmentExistMiddleware, multerGetter(uploadType.submission).single('file'), authenticateMiddleware, CreateSubmission.perform);
+classRoute.post('/:class_code/students/assignment/:assignment_id/submission', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, checkAssignmentExistMiddleware, checkAlreadySubmited, multerGetter(uploadType.submission).single('file'), authenticateMiddleware, CreateSubmission.perform);
+classRoute.patch('/:class_code/students/assignment/:assignment_id/submission/:submission_id', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, checkAssignmentExistMiddleware, checkAssignmentOwner, UpdateSubmission.updateMark);
+classRoute.get('/:class_code/assignments/:assignment_id/submission/:submission_id', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkAssignmentExistMiddleware, GetSubmission.getSubmissionLink);
 
 export default classRoute;
