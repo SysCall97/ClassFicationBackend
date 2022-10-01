@@ -77,3 +77,8 @@ export interface ISaveSubmission {
     submissionCode: string,
     uid: string,
 }
+
+export interface IUpdateMark {
+    submissionId: string,
+    mark: number,
+}
