@@ -1,6 +1,6 @@
 import Assignment from '../../models/Assignment';
 import Map from '../../models/Map'
-import { ISaveAssignment, IGetAssignment, ICheckAssignment } from './../../interfaces/IClass';
+import { ISaveAssignment, IGetAssignment, ICheckAssignment, ICheckEntityOwner } from './../../interfaces/IClass';
 import { TRY_AGAIN_LATER } from '../../messages';
 
 class AssignmentService {
@@ -32,7 +32,23 @@ class AssignmentService {
             else if(status === 'future') query = Assignment.find({classCode: classCode, uid: uid, startDate: { $gt: date }});
 
             const assignment = await query.select('title classCode startDate lastDate')
-                                        .populate('teacher', 'name')
+                                        .populate('teacher', 'name').populate({
+                                            path: 'submissions',
+                                            select: {
+                                                'assignmentCode': 0,
+                                                '__v': 0,
+                                                'updatedAt': 0,
+                                                'submissionCode': 0
+                                            },
+                                            populate: {
+                                                path: 'student',
+                                                model: 'user',
+                                                select: {
+                                                    'name': 1,
+                                                    'email': 1
+                                                }
+                                            }
+                                        })
                                         .skip(skip).limit(limit);
             return assignment;
         } catch (error: any) {
@@ -54,7 +70,15 @@ class AssignmentService {
             else if(status === 'past') query = Assignment.find({classCode: classCode, lastDate: { $lt: date }}).select('title classCode startDate lastDate');
             else if(status === 'future') query = Assignment.find({classCode: classCode, startDate: { $gt: date }}).select('title classCode startDate lastDate -_id');
 
-            const _assignments = await query.populate('teacher', 'name').populate('submissions')
+            const _assignments = await query.populate('teacher', 'name').populate({
+                                            path: 'submissions',
+                                            select: {
+                                                'assignmentCode': 0,
+                                                '__v': 0,
+                                                'updatedAt': 0,
+                                                'submissionCode': 0
+                                            }
+                                    })
                                     .skip(skip).limit(limit);
 
             const assignments = _assignments.map(assignment => {
@@ -113,6 +137,18 @@ class AssignmentService {
         const { classCode, assignmentId } = payload;
         const count = await Assignment.find({ classCode: classCode, _id: assignmentId}).count();
         return count > 0;
+    }
+
+    public static isAssignmentOwner(data: ICheckEntityOwner): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const { entityId, uid } = data;
+                const val = Assignment.exists({_id: entityId, teacher: uid});
+                resolve(!!val);
+            } catch (error: any) {
+                reject(error);
+            }
+        });
     }
 }
 
