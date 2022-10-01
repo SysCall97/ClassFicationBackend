@@ -8,6 +8,7 @@ import { router } from './routes';
 
 import { authenticateMiddleware, checkJoinedClassMiddleware } from './middleware';
 import GetAssignment from './controllers/_class/assignment/GetAssignment';
+import GetSubmission from './controllers/_class/assignment/submission/GetSubmissions';
 
 require('dotenv').config();
 
@@ -20,6 +21,7 @@ const startApp = () => {
     app.get('/', (req: Request, res: Response) => res.send('Everything is working fine'));
 
     app.get("/assignment/:map_id", GetAssignment.getAssignmentPdf);
+    app.get("/submission/:id", GetSubmission.getSubmissionPdf);
     app.use("/api/v1", router);
     
     const port = process.env.PORT || 5000;
