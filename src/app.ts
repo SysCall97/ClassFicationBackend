@@ -6,7 +6,6 @@ import cluster from 'cluster';
 import { cpus } from 'os';
 import { router } from './routes';
 
-import { authenticateMiddleware, checkJoinedClassMiddleware } from './middleware';
 import GetAssignment from './controllers/_class/assignment/GetAssignment';
 import GetSubmission from './controllers/_class/assignment/submission/GetSubmissions';
 
