@@ -82,3 +82,9 @@ export interface IUpdateMark {
     submissionId: string,
     mark: number,
 }
+
+export interface IGetAssesment {
+    teacherId: string,
+    studentId: string,
+    classCode: string
+}
