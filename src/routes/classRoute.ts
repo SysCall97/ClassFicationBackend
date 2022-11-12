@@ -3,6 +3,7 @@ import {Router} from 'express';
 import CreateAssignment from '../controllers/_class/assignment/CreateAssignmnt';
 import GetAssignment from '../controllers/_class/assignment/GetAssignment';
 import CreateSubmission from '../controllers/_class/assignment/submission/CreateSubmission';
+import GetAssesments from '../controllers/_class/assignment/submission/GetAssesments';
 import GetSubmission from '../controllers/_class/assignment/submission/GetSubmissions';
 import UpdateSubmission from '../controllers/_class/assignment/submission/UpdateSubmission';
 import CreateClass from '../controllers/_class/CreateClass';
@@ -33,6 +34,7 @@ import { checkAlreadySubmited } from '../middleware/checkAlreadySubmited';
 import { checkAssignmentExistMiddleware } from '../middleware/checkAssignmentExist';
 import { checkAssignmentOwner } from '../middleware/checkAssignmentOwner';
 import { checkCommentExistsMiddleware } from '../middleware/checkCommentExist';
+import { checkTeacherOrStudentIdMatchesMiddleware } from '../middleware/checkTeacherOrStudentIdMatches';
 
 const classRoute: Router = Router();
 
@@ -64,5 +66,7 @@ classRoute.get('/:class_code/assignments/:id', checkClassExistsMiddleware, check
 classRoute.post('/:class_code/students/assignment/:assignment_id/submission', filterOutTeacher, checkClassExistsMiddleware, checkJoinedClassMiddleware, checkAssignmentExistMiddleware, checkAlreadySubmited, multerGetter(uploadType.submission).single('file'), authenticateMiddleware, CreateSubmission.perform);
 classRoute.patch('/:class_code/students/assignment/:assignment_id/submission/:submission_id', filterOutStudent, checkClassExistsMiddleware, checkJoinedClassMiddleware, checkAssignmentExistMiddleware, checkAssignmentOwner, UpdateSubmission.updateMark);
 classRoute.get('/:class_code/assignments/:assignment_id/submission/:submission_id', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkAssignmentExistMiddleware, GetSubmission.getSubmissionLink);
+
+classRoute.get('/:class_code/teachers/:teacher_id/students/:student_id/assesments', checkClassExistsMiddleware, checkJoinedClassMiddleware, checkTeacherOrStudentIdMatchesMiddleware, GetAssesments.perform);
 
 export default classRoute;
