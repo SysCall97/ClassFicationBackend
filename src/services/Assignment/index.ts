@@ -1,6 +1,6 @@
 import Assignment from '../../models/Assignment';
 import Map from '../../models/Map'
-import { ISaveAssignment, IGetAssignment, ICheckAssignment, ICheckEntityOwner } from './../../interfaces/IClass';
+import { ISaveAssignment, IGetAssignment, ICheckAssignment, ICheckEntityOwner, IGetAssesment } from './../../interfaces/IClass';
 import { TRY_AGAIN_LATER } from '../../messages';
 
 class AssignmentService {
@@ -149,6 +149,41 @@ class AssignmentService {
                 reject(error);
             }
         });
+    }
+
+    /**
+     * getAssesments
+     */
+    public static async getAssesments(payload: IGetAssesment): Promise<any> {
+        try {
+            const { teacherId, studentId, classCode } = payload;
+            // const assignmentList = this.getAssignmentCodesByTeacherId(teacherId, classCode);
+            const data = await Assignment.find({classCode: classCode, teacher: teacherId}).select('title -_id')
+                                .populate({
+                                    path: 'submissions',
+                                    match: { 'student': studentId },
+                                    select: {
+                                        'assignmentCode': 0,
+                                        '__v': 0,
+                                        'updatedAt': 0,
+                                        'submissionCode': 0
+                                    }
+                                });
+
+            // const data = await Assignment.find({classCode: classCode, teacher: teacherId}).select('title -_id');
+            return data;
+        } catch (error) {
+            return new Error(TRY_AGAIN_LATER);
+        }
+    }
+
+    public static async getAssignmentCodesByTeacherId(id: string, classCode: string): Promise<any> {
+        try {
+            const data = await Assignment.find({classCode: classCode, teacher: id}).select('assignmentCode -_id');
+            return data;
+        } catch (error) {
+            return [];
+        }
     }
 }
 
