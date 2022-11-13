@@ -157,8 +157,8 @@ class AssignmentService {
     public static async getAssesments(payload: IGetAssesment): Promise<any> {
         try {
             const { teacherId, studentId, classCode } = payload;
-            // const assignmentList = this.getAssignmentCodesByTeacherId(teacherId, classCode);
-            const data = await Assignment.find({classCode: classCode, teacher: teacherId}).select('title -_id')
+            const date = Date.now();
+            const data = await Assignment.find({classCode: classCode, teacher: teacherId, startDate: { $lte: date }}).select('title -_id')
                                 .populate({
                                     path: 'submissions',
                                     match: { 'student': studentId },
@@ -170,7 +170,6 @@ class AssignmentService {
                                     }
                                 });
 
-            // const data = await Assignment.find({classCode: classCode, teacher: teacherId}).select('title -_id');
             return data;
         } catch (error) {
             return new Error(TRY_AGAIN_LATER);
