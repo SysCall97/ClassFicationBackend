@@ -88,3 +88,13 @@ export interface IGetAssesment {
     studentId: string,
     classCode: string
 }
+
+export interface ICreateSession {
+    uid: string,
+    startDate: Date,
+}
+
+export interface ISessionAttend {
+    uid: string,
+    sessionId: string
+}
