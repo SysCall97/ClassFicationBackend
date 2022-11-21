@@ -92,6 +92,7 @@ export interface IGetAssesment {
 export interface ICreateSession {
     uid: string,
     startDate: Date,
+    classCode: string
 }
 
 export interface ISessionAttend {
