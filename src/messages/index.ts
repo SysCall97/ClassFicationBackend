@@ -42,3 +42,6 @@ export const NOT_ALLOWED_TO_SEE_ASSIGNMENT: string = "You're not allowed to see 
 export const NOT_ALLOWED_TO_SUBMIT_ASSIGNMENT: string = "Not allowed to submit the incoming assignment";
 export const NOT_ALLOWED_ACTION: string = "You're not allowed to perform this action";
 export const ALREADY_SUBMITTED: string = "Assignment already submitted";
+export const SESSEION_CREATED_SUCCESSFULLY: string = "Session created successfully";
+export const JOIN_SUCCESSFULLY: string = "Session joined successfully";
+export const EXIT_SUCCESSFULLY: string = "Session exited successfully";
