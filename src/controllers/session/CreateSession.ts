@@ -9,10 +9,11 @@ class CreateSession {
         try {
             const payload: ICreateSession = {
                 uid: req.body.uid,
-                startDate: req.body.startDate
+                startDate: req.body.startDate,
+                classCode: req.params.class_code
             }
             const data = await SessionService.create(payload);
-            return res.status(StatusCodes.CREATED).json({ message: SESSEION_CREATED_SUCCESSFULLY, data });
+            return res.status(StatusCodes.CREATED).json({ message: SESSEION_CREATED_SUCCESSFULLY });
         } catch (error) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error });
         }

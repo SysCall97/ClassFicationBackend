@@ -10,6 +10,16 @@ const sessionSchema = new mongoose.Schema({
         required: true,
         ref: 'user'
     },
+    classCode: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    sessionCode: {
+        type: String,
+        trim: true,
+        required: true
+    },
     finalAttendee: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
