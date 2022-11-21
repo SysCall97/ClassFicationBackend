@@ -12,7 +12,25 @@ class JoinSession {
                 sessionId: req.params.session_id
             }
             const data = await SessionService.join(payload);
-            return res.status(StatusCodes.CREATED).json({ message: JOIN_SUCCESSFULLY, data });
+            return res.status(StatusCodes.OK).json({ message: JOIN_SUCCESSFULLY, data });
+        } catch (error) {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error });
+        }
+    }
+
+    public static async getSessionList(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
+        try {
+            const data = await SessionService.getSessionLists(req.params.class_code);
+            return res.status(StatusCodes.OK).json({ data });
+        } catch (error) {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error });
+        }
+    }
+
+    public static async getSessionCode(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
+        try {
+            const data = await SessionService.getSessionCode(req.params.session_id, req.params.class_code);
+            return res.status(StatusCodes.OK).json({ data });
         } catch (error) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error });
         }
