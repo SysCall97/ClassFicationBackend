@@ -69,9 +69,10 @@ class SessionService {
     /**
      * getSessionLists
      */
-    public static async getSessionLists(classCode: string): Promise<any> {
+    public static async getSessionLists(classCode: string, page: number, limit: number): Promise<any> {
         try {
-            const data = await Session.find({ classCode: classCode }).select('startDate').populate('teacher', 'name');
+            const skip = page * limit;
+            const data = await Session.find({ classCode: classCode }).select('startDate').populate('teacher', 'name').sort({ createdAt : -1}).skip(skip).limit(limit);
             return data;
         } catch (error) {
             return error;

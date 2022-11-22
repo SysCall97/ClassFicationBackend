@@ -20,7 +20,11 @@ class JoinSession {
 
     public static async getSessionList(req: Request, res: Response): Promise< Response<any, Record<string, any>> > {
         try {
-            const data = await SessionService.getSessionLists(req.params.class_code);
+            const page = Number(req.query.page ?? 0);
+            let limit = Number(req.query.limit ?? 1);
+            limit = limit <= 10 ? limit : 10;
+            const data = await SessionService.getSessionLists(req.params.class_code, page, limit);
+
             return res.status(StatusCodes.OK).json({ data });
         } catch (error) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error });
